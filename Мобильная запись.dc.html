@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&family=IBM+Plex+Sans:wght@300;400;500&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  .mb-shell{ display:none; }
+  @media (max-width:900px){
+    .mb-shell{ display:block; }
+    body{ padding-bottom:0 !important; }
+  }
+  @media (max-width:900px){
+    body[data-mview] #hero, body[data-mview] .mq-wrap,
+    body[data-mview] #results, body[data-mview] #review,
+    body[data-mview] #cases, body[data-mview] #case-outro, body[data-mview] #approach,
+    body[data-mview] #path, body[data-mview] .mj-wrap,
+    body[data-mview] #price, body[data-mview] #explains,
+    body[data-mview] #consultation, body[data-mview] #contacts{ display:none !important; }
+
+
+    body[data-mview="home"] #hero, body[data-mview="home"] .mq-wrap{ display:block !important; }
+    body[data-mview="home"] #hero{ display:flex !important; }
+    body[data-mview="results"] #results, body[data-mview="results"] #review{ display:flex !important; }
+    body[data-mview="results"] #results{ display:block !important; }
+    body[data-mview="case"] #cases{ display:block !important; }
+    body[data-mview="case"] #case-outro{ display:flex !important; }
+    body[data-mview] h1, body[data-mview] h2, body[data-mview] h3, body[data-mview] blockquote,
+    body[data-mview] p, body[data-mview] li{ hyphens:none !important; overflow-wrap:break-word; text-wrap:pretty; }
+    body[data-mview] h1 br, body[data-mview] h2 br, body[data-mview] h3 br,
+    body[data-mview] p br, body[data-mview] blockquote br{ display:none; }
+    body[data-mview="approach"][data-msub="doctor"] #approach,
+    body[data-mview="approach"][data-msub="doctor"] #path{ display:block !important; }
+    body[data-mview="approach"][data-msub="journey"] .mj-wrap{ display:block !important; }
+    body[data-mview="approach"][data-msub="explains"] #explains{ display:block !important; }
+    body[data-mview="approach"] #approach{ padding-top:74px !important; }
+    body[data-mview="approach"] .mj-wrap, body[data-mview="approach"] #explains{ padding-top:74px !important; }
+    body[data-mview="approach"] #path, body[data-mview="approach"] .mj-wrap,
+    body[data-mview="approach"] #explains{ padding-bottom:104px !important; }
+    html, body{ overflow-x:hidden !important; }
+    body{ padding-bottom:70px !important; }
+    body[data-mview="results"] #review{ padding-bottom:110px !important; }
+    body[data-mview="results"] #results{ padding-bottom:40px !important; }
+    body[data-mview="case"] #case-outro{ padding-bottom:110px !important; }
+  }
+  .mb-sheet{ -webkit-overflow-scrolling:touch; }
+  .mb-shell input, .mb-shell textarea, .mb-shell button{ font-family:inherit; }
+</style>
+</helmet>
+
+<div class="mb-shell" style="font-family:'IBM Plex Sans',-apple-system,sans-serif;">
+
+  <sc-if value="{{ isApproach }}" hint-placeholder-val="{{ false }}">
+    <div style="position:fixed; left:0; right:0; top:0; z-index:88; display:flex; gap:0; overflow-x:auto; background:rgba(12,12,13,0.96); border-bottom:1px solid rgba(244,244,243,0.12); padding-top:env(safe-area-inset-top);">
+      <sc-for list="{{ subs }}" as="s" hint-placeholder-count="3">
+        <button type="button" onClick="{{ s.pick }}" style="flex:1 0 auto; padding:0 14px; min-height:46px; border:0; background:none; white-space:nowrap; font-family:'IBM Plex Mono',monospace; font-size:10.5px; letter-spacing:0.1em; text-transform:uppercase; color:{{ s.color }}; border-bottom:2px solid {{ s.line }};">{{ s.name }}</button>
+      </sc-for>
+    </div>
+  </sc-if>
+
+  <nav style="position:fixed; left:0; right:0; bottom:0; z-index:130; display:grid; grid-template-columns:repeat(5,minmax(0,1fr)); background:#0c0c0d; border-top:1px solid rgba(244,244,243,0.14); padding-bottom:env(safe-area-inset-bottom); opacity:{{ navOpacity }}; pointer-events:{{ navEvents }}; transition:opacity .3s ease;">
+    <sc-for list="{{ nav }}" as="n" hint-placeholder-count="5">
+      <button type="button" onClick="{{ n.pick }}" style="min-height:58px; border:0; background:none; font-family:'IBM Plex Mono',monospace; font-size:9px; letter-spacing:0.06em; text-transform:uppercase; color:{{ n.color }}; border-top:2px solid {{ n.line }}; margin-top:-1px;">{{ n.name }}</button>
+    </sc-for>
+  </nav>
+
+  <sc-if value="{{ isOpen }}" hint-placeholder-val="{{ false }}">
+    <div class="mb-sheet" style="position:fixed; inset:0; z-index:120; background:#efece5; color:#1b1a18; overflow-y:auto; padding:calc(env(safe-area-inset-top) + 16px) 20px calc(env(safe-area-inset-bottom) + 96px);">
+
+      <div style="display:flex; align-items:center; justify-content:space-between; gap:16px; font-family:'IBM Plex Mono',monospace; font-size:11px; letter-spacing:0.16em; text-transform:uppercase; color:rgba(27,26,24,0.7);">
+        <div>Запись на консультацию</div>
+        <button type="button" onClick="{{ close }}" style="background:none; border:0; padding:6px; font-size:20px; line-height:1; color:#1b1a18; cursor:pointer;">×</button>
+      </div>
+      <div style="margin-top:14px; display:flex; gap:0; border-bottom:1px solid rgba(27,26,24,0.16);">
+        <sc-for list="{{ tabs }}" as="t" hint-placeholder-count="3">
+          <button type="button" onClick="{{ t.pick }}" style="flex:1; min-height:44px; border:0; background:none; font-family:'IBM Plex Mono',monospace; font-size:10.5px; letter-spacing:0.1em; text-transform:uppercase; color:{{ t.color }}; border-bottom:2px solid {{ t.line }}; margin-bottom:-1px;">{{ t.name }}</button>
+        </sc-for>
+      </div>
+
+      <sc-if value="{{ tabBooking }}" hint-placeholder-val="{{ true }}">
+      <div style="margin-top:14px; display:flex; align-items:center; gap:10px;">
+        <div style="flex:1; height:2px; background:rgba(27,26,24,0.14);"><div style="height:2px; background:#8a6a3c; width:{{ progress }};"></div></div>
+        <div style="font-family:'IBM Plex Mono',monospace; font-size:11px; color:rgba(27,26,24,0.6);">{{ stepLabel }}</div>
+      </div>
+
+      <sc-if value="{{ isDate }}" hint-placeholder-val="{{ true }}">
+        <div style="margin-top:26px;">
+          <div style="font-family:'Source Serif 4',Georgia,serif; font-weight:600; font-size:24px; line-height:1.15;">Выберите дату</div>
+          <div style="margin-top:6px; font-size:13.5px; color:rgba(27,26,24,0.62);">{{ monthLabel }}</div>
+          <div style="margin-top:16px; display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:8px;">
+            <sc-for list="{{ days }}" as="d" hint-placeholder-count="12">
+              <button type="button" onClick="{{ d.pick }}" disabled="{{ d.disabled }}" style="min-height:58px; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:3px; border:1px solid {{ d.border }}; background:{{ d.bg }}; color:{{ d.color }}; font-family:'IBM Plex Mono',monospace; font-size:15px;">
+                <span>{{ d.num }}</span>
+                <span style="font-size:10px; opacity:0.7;">{{ d.wd }}</span>
+              </button>
+            </sc-for>
+          </div>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ isTopic }}" hint-placeholder-val="{{ false }}">
+        <div style="margin-top:26px;">
+          <div style="font-family:'Source Serif 4',Georgia,serif; font-weight:600; font-size:24px; line-height:1.15;">Что хотите обсудить?</div>
+          <div style="margin-top:16px; border-top:1px solid rgba(27,26,24,0.14);">
+            <sc-for list="{{ topics }}" as="t" hint-placeholder-count="7">
+              <button type="button" onClick="{{ t.pick }}" style="width:100%; min-height:52px; text-align:left; background:none; border:0; border-bottom:1px solid rgba(27,26,24,0.12); display:flex; align-items:center; justify-content:space-between; gap:14px; color:{{ t.color }}; font-size:16px;">
+                <span>{{ t.name }}</span>
+                <span style="font-family:'IBM Plex Mono',monospace; font-size:12px; color:#8a6a3c;">{{ t.dot }}</span>
+              </button>
+            </sc-for>
+          </div>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ isTime }}" hint-placeholder-val="{{ false }}">
+        <div style="margin-top:26px;">
+          <div style="font-family:'Source Serif 4',Georgia,serif; font-weight:600; font-size:24px; line-height:1.15;">Выберите время</div>
+          <div style="margin-top:6px; font-size:13.5px; color:rgba(27,26,24,0.62);">{{ dateLabel }}</div>
+          <div style="margin-top:16px; display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:10px;">
+            <sc-for list="{{ slots }}" as="s" hint-placeholder-count="4">
+              <button type="button" onClick="{{ s.pick }}" style="min-height:54px; border:1px solid {{ s.border }}; background:{{ s.bg }}; color:{{ s.color }}; font-family:'IBM Plex Mono',monospace; font-size:16px;">{{ s.time }}</button>
+            </sc-for>
+          </div>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ never }}" hint-placeholder-val="{{ false }}">
+        <div style="margin-top:26px;">
+          <div style="font-family:'Source Serif 4',Georgia,serif; font-weight:600; font-size:24px; line-height:1.15;">Как с вами связаться</div>
+          <div style="margin-top:16px; display:grid; gap:12px;">
+            <input value="{{ name }}" onChange="{{ setName }}" placeholder="Имя" style="width:100%; min-height:52px; padding:0 14px; border:1px solid rgba(27,26,24,0.24); background:#fffdf9; font-size:16px; color:#1b1a18;">
+            <input value="{{ phone }}" onChange="{{ setPhone }}" placeholder="Телефон" inputMode="tel" style="width:100%; min-height:52px; padding:0 14px; border:1px solid rgba(27,26,24,0.24); background:#fffdf9; font-size:16px; color:#1b1a18;">
+            <div style="display:flex; gap:8px;">
+              <sc-for list="{{ channels }}" as="c" hint-placeholder-count="3">
+                <button type="button" onClick="{{ c.pick }}" style="flex:1; min-height:48px; border:1px solid {{ c.border }}; background:{{ c.bg }}; color:{{ c.color }}; font-size:14px;">{{ c.name }}</button>
+              </sc-for>
+            </div>
+            <textarea value="{{ note }}" onChange="{{ setNote }}" placeholder="Комментарий, по желанию" rows="3" style="width:100%; padding:13px 14px; border:1px solid rgba(27,26,24,0.24); background:#fffdf9; font-size:16px; color:#1b1a18;"></textarea>
+            <label style="display:flex; gap:12px; align-items:flex-start; font-size:13.5px; line-height:1.5; color:rgba(27,26,24,0.75);">
+              <input type="checkbox" checked="{{ consent }}" onChange="{{ toggleConsent }}" style="margin-top:2px; width:20px; height:20px; accent-color:#8a6a3c;">
+              <span>Согласен на обработку персональных данных для записи на консультацию.</span>
+            </label>
+            <sc-if value="{{ error }}" hint-placeholder-val="{{ false }}">
+              <div style="font-size:13.5px; line-height:1.5; color:#8a3c2c;">{{ error }}</div>
+            </sc-if>
+            <button type="button" onClick="{{ submit }}" style="min-height:56px; border:1px solid #1b1a18; background:#1b1a18; color:#f4f1ea; font-family:'IBM Plex Mono',monospace; font-size:12px; letter-spacing:0.18em; text-transform:uppercase;">Подтвердить запись</button>
+          </div>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ isDone }}" hint-placeholder-val="{{ false }}">
+        <div style="margin-top:32px;">
+          <div style="font-family:'Source Serif 4',Georgia,serif; font-weight:700; text-transform:uppercase; font-size:28px; line-height:1.05;">Вы выбрали время</div>
+          <div style="margin-top:20px; border-top:1px solid rgba(27,26,24,0.16);">
+            <div style="display:flex; justify-content:space-between; padding:13px 0; border-bottom:1px solid rgba(27,26,24,0.12); font-size:15px;"><span style="color:rgba(27,26,24,0.6);">Запрос</span><span>{{ topic }}</span></div>
+            <div style="display:flex; justify-content:space-between; padding:13px 0; border-bottom:1px solid rgba(27,26,24,0.12); font-size:15px;"><span style="color:rgba(27,26,24,0.6);">Дата</span><span>{{ dateLabel }}</span></div>
+            <div style="display:flex; justify-content:space-between; padding:13px 0; border-bottom:1px solid rgba(27,26,24,0.12); font-size:15px;"><span style="color:rgba(27,26,24,0.6);">Время</span><span>{{ time }}</span></div>
+          </div>
+          <p style="margin:18px 0 0; font-size:15px; line-height:1.6; color:rgba(27,26,24,0.75);">Подтвердите запись в Telegram — Филипп согласует детали лично.</p>
+          <a href="{{ tgLink }}" target="_blank" rel="noopener" onClick="{{ copyMsg }}" style="margin-top:22px; display:flex; align-items:center; justify-content:center; gap:10px; min-height:56px; border:1px solid #1b1a18; background:#1b1a18; color:#f4f1ea; font-family:'IBM Plex Mono',monospace; font-size:12px; letter-spacing:0.16em; text-transform:uppercase; text-decoration:none;">Продолжить в Telegram ↗</a>
+          <sc-if value="{{ copied }}" hint-placeholder-val="{{ false }}">
+            <div style="margin-top:12px; font-size:13.5px; line-height:1.5; color:rgba(27,26,24,0.7);">Данные записи скопированы. Отправьте сообщение Филиппу в Telegram.</div>
+          </sc-if>
+          <button type="button" onClick="{{ close }}" style="margin-top:16px; width:100%; min-height:50px; border:1px solid rgba(27,26,24,0.3); background:none; color:#1b1a18; font-family:'IBM Plex Mono',monospace; font-size:12px; letter-spacing:0.18em; text-transform:uppercase;">Закрыть</button>
+
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ showBack }}" hint-placeholder-val="{{ false }}">
+        <button type="button" onClick="{{ back }}" style="margin-top:22px; background:none; border:0; padding:8px 0; font-family:'IBM Plex Mono',monospace; font-size:11.5px; letter-spacing:0.14em; text-transform:uppercase; color:rgba(27,26,24,0.6);">← Назад</button>
+      </sc-if>
+      </sc-if>
+
+      <sc-if value="{{ tabPrice }}" hint-placeholder-val="{{ false }}">
+        <div style="margin-top:26px;">
+          <div style="font-family:'Source Serif 4',Georgia,serif; font-weight:700; text-transform:uppercase; font-size:26px; line-height:1.06; text-wrap:balance;">Стоимость зависит от объёма вмешательства</div>
+          <p style="margin:14px 0 0; font-size:14.5px; line-height:1.6; color:rgba(27,26,24,0.75);">Точную сумму Филипп называет на консультации, после осмотра.</p>
+          <div style="margin-top:18px; border-top:1px solid rgba(27,26,24,0.18);">
+            <sc-for list="{{ priceRows }}" as="p" hint-placeholder-count="6">
+              <div style="display:flex; justify-content:space-between; gap:16px; padding:13px 0; border-bottom:1px solid rgba(27,26,24,0.12); font-size:14.5px;">
+                <span>{{ p.name }}</span><span style="color:rgba(27,26,24,0.6); white-space:nowrap;">{{ p.value }}</span>
+              </div>
+            </sc-for>
+          </div>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ tabContacts }}" hint-placeholder-val="{{ false }}">
+          <div style="margin-top:26px;">
+            <div style="font-family:'Source Serif 4',Georgia,serif; font-weight:700; text-transform:uppercase; font-size:22px; line-height:1.06;">Филипп Помазков</div>
+            <div style="margin-top:6px; font-size:14px; color:rgba(27,26,24,0.68);">Пластический хирург</div>
+            <div style="margin-top:14px; display:flex; flex-direction:column; gap:9px; font-size:15px;">
+              <a href="https://t.me/PomazkovPhilipp" target="_blank" rel="noopener" style="color:#1b1a18; text-decoration:underline; text-underline-offset:4px;">Telegram · @PomazkovPhilipp</a>
+              <a href="https://www.instagram.com/dr.pomazkoff/" target="_blank" rel="noopener" style="color:#1b1a18; text-decoration:underline; text-underline-offset:4px;">Instagram · @dr.pomazkoff</a>
+            </div>
+            <div style="margin-top:22px; font-size:12.5px; letter-spacing:0.1em; text-transform:uppercase; color:rgba(27,26,24,0.6);">Приём в клинике</div>
+            <div style="margin-top:10px; display:flex; flex-direction:column; gap:6px; font-size:14.5px; line-height:1.6; color:rgba(27,26,24,0.8);">
+              <div>ООО «Клиника ОстМедКонсалт»</div>
+              <div>Санкт-Петербург, ул. Шпалерная, д. 36, лит. А</div>
+              <div>Лицензия Л041-01148-78/00349385</div>
+            </div>
+            <div style="margin-top:22px; display:flex; flex-direction:column; gap:9px; font-size:14px;">
+              <a href="Политика персональных данных.dc.html" style="color:rgba(27,26,24,0.8); text-decoration:underline; text-underline-offset:4px;">Политика обработки персональных данных</a>
+              <a href="Политика cookie.dc.html" style="color:rgba(27,26,24,0.8); text-decoration:underline; text-underline-offset:4px;">Политика cookie</a>
+              <a href="Политика cookie.dc.html#clinic" style="color:rgba(27,26,24,0.8); text-decoration:underline; text-underline-offset:4px;">Сведения о клинике</a>
+              <button type="button" onClick="{{ openCookieSettings }}" style="align-self:flex-start; padding:0; background:none; border:0; text-align:left; color:rgba(27,26,24,0.8); font-family:inherit; font-size:14px; text-decoration:underline; text-underline-offset:4px;">Настройки cookie</button>
+            </div>
+            <p style="margin:22px 0 0; font-size:12.5px; line-height:1.6; color:rgba(27,26,24,0.62);">Имеются противопоказания. Необходима консультация специалиста. Информация на сайте носит информационный характер и не является публичной офертой.</p>
+          </div>
+      </sc-if>
+    </div>
+  </sc-if>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:414,&quot;height&quot;:860}}">
+class Component extends DCLogic {
+  state = { tab:'booking', copied:false, view:'home', sub:'doctor', past:false, open:false, step:1, topic:null, date:null, time:null, name:'', phone:'', channel:'Telegram', note:'', consent:false, error:'' };
+
+  syncBody(){
+    const mobile = window.innerWidth <= 900;
+    if (mobile){
+      document.body.dataset.mview = this.state.view;
+      document.body.dataset.msub = this.state.sub;
+    } else {
+      delete document.body.dataset.mview;
+      delete document.body.dataset.msub;
+    }
+  }
+  componentDidUpdate(){ this.syncBody(); }
+
+  // запрет висячих предлогов и союзов на мобильном
+  fixOrphans(){
+    if (window.innerWidth > 900) return;
+    const short = /(^|[\s(«"])([а-яёa-z]{1,3}|не|как|или|для|что|это)\s+/gi;
+    const walk = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT);
+    const nodes = [];
+    while (walk.nextNode()) nodes.push(walk.currentNode);
+    nodes.forEach(n => {
+      const p = n.parentElement;
+      if (!p || p.closest('script,style')) return;
+      const v = n.nodeValue;
+      if (!v || v.indexOf(' ') === -1) return;
+      const next = v.replace(short, (m, a, w) => a + w + '\u00a0');
+      if (next !== v) n.nodeValue = next;
+    });
+  }
+
+  toTop(){
+    if (document.scrollingElement) document.scrollingElement.scrollTop = 0;
+    document.body.scrollTop = 0;
+    document.documentElement.scrollTop = 0;
+    window.scrollTo(0,0);
+  }
+  go(view){
+    this.setState({ view }, () => { this.syncBody(); this.toTop(); this._onScroll && this._onScroll(); });
+  }
+
+  // mobile hero edit: skip the bare-face close-up (3.2s – 6.6s)
+  trimHero(){
+    const v = document.querySelector('#hero video');
+    if (!v || v.dataset.mtrim) return;
+    v.dataset.mtrim = '1';
+    const CUT_IN = 2.9, CUT_OUT = 7.4;
+    const guard = () => {
+      if (window.innerWidth > 900) return;
+      if (v.currentTime >= CUT_IN && v.currentTime < CUT_OUT) v.currentTime = CUT_OUT;
+    };
+    v.addEventListener('timeupdate', guard);
+    guard();
+  }
+
+  componentDidMount(){
+    this.syncBody();
+    this.trimHero();
+    this._heroTimer = setInterval(() => this.trimHero(), 1000);
+    this._onResize = () => this.syncBody();
+    window.addEventListener('resize', this._onResize);
+    this._onHome = () => this.go('home');
+    window.addEventListener('pmz-home', this._onHome);
+    this._onOpen = () => this.setState({ open:true });
+    window.addEventListener('pmz-booking-open', this._onOpen);
+    this._onHash = () => { if (location.hash === '#booking' && window.innerWidth <= 900) this.setState({ open:true }); };
+    window.addEventListener('hashchange', this._onHash);
+    this._onScroll = () => {
+      const top = Math.max(
+        document.scrollingElement ? document.scrollingElement.scrollTop : 0,
+        document.body.scrollTop || 0,
+        document.documentElement.scrollTop || 0,
+        window.scrollY || 0
+      );
+      const past = top > window.innerHeight * 0.6;
+      if (past !== this.state.past) this.setState({ past });
+    };
+    window.addEventListener('scroll', this._onScroll, { passive:true });
+    document.addEventListener('scroll', this._onScroll, { passive:true });
+    document.body.addEventListener('scroll', this._onScroll, { passive:true });
+    this._scrollPoll = setInterval(this._onScroll, 300);
+    setTimeout(() => this.fixOrphans(), 900);
+    this._orphanTimer = setInterval(() => this.fixOrphans(), 2500);
+    this._onScroll();
+  }
+  componentWillUnmount(){
+    window.removeEventListener('pmz-booking-open', this._onOpen);
+    window.removeEventListener('hashchange', this._onHash);
+    window.removeEventListener('scroll', this._onScroll);
+    document.removeEventListener('scroll', this._onScroll);
+    document.body.removeEventListener('scroll', this._onScroll);
+    clearInterval(this._scrollPoll);
+    clearInterval(this._orphanTimer);
+    clearInterval(this._heroTimer);
+    window.removeEventListener('resize', this._onResize);
+    window.removeEventListener('pmz-home', this._onHome);
+  }
+
+  // temporary availability source — replace with GET /availability
+  availability(){
+    const out = [];
+    const base = new Date();
+    for (let i=1;i<=16;i++){
+      const d = new Date(base.getFullYear(), base.getMonth(), base.getDate()+i);
+      const wd = d.getDay();
+      const open = wd !== 0 && wd !== 6 && (i % 3 !== 0);
+      out.push({ key:d.toISOString().slice(0,10), d, open,
+        slots: open ? ['11:00','12:30','15:00','17:30'].filter((_,n) => (i+n) % 5 !== 0) : [] });
+    }
+    return out;
+  }
+  fmt(d){
+    const m = ['января','февраля','марта','апреля','мая','июня','июля','августа','сентября','октября','ноября','декабря'];
+    return d.getDate() + ' ' + m[d.getMonth()];
+  }
+
+  renderVals(){
+    const s = this.state;
+    const av = this.availability();
+    const cur = av.find(a => a.key === s.date);
+    const wdn = ['вс','пн','вт','ср','чт','пт','сб'];
+    const mn = ['январь','февраль','март','апрель','май','июнь','июль','август','сентябрь','октябрь','ноябрь','декабрь'];
+    const names = ['Блефаропластика','Маммопластика','Абдоминопластика','Липосакция','Липоскульптурирование','Подтяжка лица','Пока не знаю / хочу обсудить'];
+
+    return {
+      isOpen: s.open,
+      isApproach: s.view === 'approach' && !s.open,
+      navOpacity: (s.view === 'home' && !s.past && !s.open) ? 0 : 1,
+      navEvents: (s.view === 'home' && !s.past && !s.open) ? 'none' : 'auto',
+      showHome: s.view !== 'home' && !s.open,
+      goHome: () => {
+        if (window.innerWidth <= 900) document.body.dataset.mview = 'home';
+        this.go('home');
+      },
+      nav: [
+        { name:'Главная', key:'home' },
+        { name:'Результаты', key:'results' },
+        { name:'Работы', key:'case' },
+        { name:'Подход', key:'approach' },
+        { name:'Запись', key:'booking' }
+      ].map(n => ({
+        name: n.name,
+        color: (n.key === s.view || (n.key === 'booking' && s.open)) ? '#f4f4f3' : 'rgba(244,244,243,0.6)',
+        line: (n.key === s.view || (n.key === 'booking' && s.open)) ? '#8a6a3c' : 'transparent',
+        pick: () => {
+          if (n.key === 'booking'){ this.setState({ open:true, tab:'booking' }); return; }
+          if (window.innerWidth <= 900) document.body.dataset.mview = n.key;
+          this.setState({ open:false });
+          this.go(n.key);
+        }
+      })),
+      subs: [
+        { name:'О враче', key:'doctor' },
+        { name:'Путь пациента', key:'journey' },
+        { name:'Объясняет', key:'explains' }
+      ].map(x => ({
+        name: x.name,
+        color: x.key === s.sub ? '#f4f4f3' : 'rgba(244,244,243,0.55)',
+        line: x.key === s.sub ? '#8a6a3c' : 'transparent',
+        pick: () => {
+          if (window.innerWidth <= 900) document.body.dataset.msub = x.key;
+          this.setState({ sub:x.key });
+          this.toTop();
+        }
+      })),
+      open: () => this.setState({ open:true }),
+      close: () => this.setState({ open:false }),
+      isDate: s.step === 1, isTime: s.step === 2, isTopic: s.step === 3, never: false, isDone: s.step === 4,
+      showBack: s.step > 1 && s.step < 4,
+      stepLabel: s.step > 3 ? 'готово' : s.step + ' / 3',
+      progress: (s.step > 3 ? 100 : Math.round(s.step*33.3)) + '%',
+      copied: s.copied,
+      tabBooking: s.tab === 'booking', tabPrice: s.tab === 'price', tabContacts: s.tab === 'contacts',
+      tabs: [
+        { name:'Запись', key:'booking' },
+        { name:'Стоимость', key:'price' },
+        { name:'Контакты', key:'contacts' }
+      ].map(t => ({
+        name: t.name,
+        color: s.tab === t.key ? '#1b1a18' : 'rgba(27,26,24,0.55)',
+        line: s.tab === t.key ? '#8a6a3c' : 'transparent',
+        pick: () => this.setState({ tab:t.key })
+      })),
+      priceRows: [
+        'Блефаропластика','Маммопластика','Абдоминопластика',
+        'Липосакция','Липоскульптурирование','Подтяжка лица'
+      ].map(n => ({ name:n, value:'по консультации' })),
+      tgLink: 'https://t.me/PomazkovPhilipp',
+      openCookieSettings: () => window.dispatchEvent(new Event('pmz-cookie-settings')),
+      copyMsg: () => {
+        const msg = 'Здравствуйте, Филипп.\nХочу записаться на консультацию.\n\nДата: ' + (cur ? this.fmt(cur.d) : '') + '\nВремя: ' + (s.time || '') + '\nТема: ' + (s.topic || '');
+        if (navigator.clipboard) navigator.clipboard.writeText(msg).catch(() => {});
+        this.setState({ copied:true });
+      },
+      monthLabel: mn[new Date().getMonth()],
+      dateLabel: cur ? this.fmt(cur.d) : '',
+      topic: s.topic, time: s.time, name: s.name, phone: s.phone, note: s.note, consent: s.consent, error: s.error,
+
+      days: av.map(a => ({
+        num: a.d.getDate(), wd: wdn[a.d.getDay()],
+        disabled: !a.open,
+        border: s.date === a.key ? '#1b1a18' : (a.open ? 'rgba(27,26,24,0.24)' : 'rgba(27,26,24,0.08)'),
+        bg: s.date === a.key ? '#1b1a18' : (a.open ? '#fffdf9' : 'transparent'),
+        color: s.date === a.key ? '#f4f1ea' : (a.open ? '#1b1a18' : 'rgba(27,26,24,0.3)'),
+        pick: () => { if (a.open) this.setState({ date:a.key, time:null, step:2, error:'' }); }
+      })),
+      topics: names.map(n => ({
+        name: n,
+        dot: s.topic === n ? '●' : '',
+        color: s.topic === n ? '#1b1a18' : 'rgba(27,26,24,0.75)',
+        pick: () => this.setState({ topic:n, step:4, error:'' })
+      })),
+      slots: (cur ? cur.slots : []).map(t => ({
+        time: t,
+        border: s.time === t ? '#1b1a18' : 'rgba(27,26,24,0.24)',
+        bg: s.time === t ? '#1b1a18' : '#fffdf9',
+        color: s.time === t ? '#f4f1ea' : '#1b1a18',
+        pick: () => this.setState({ time:t, step:3, error:'' })
+      })),
+      channels: ['Telegram','WhatsApp','Телефон'].map(c => ({
+        name: c,
+        border: s.channel === c ? '#1b1a18' : 'rgba(27,26,24,0.24)',
+        bg: s.channel === c ? '#1b1a18' : '#fffdf9',
+        color: s.channel === c ? '#f4f1ea' : '#1b1a18',
+        pick: () => this.setState({ channel:c })
+      })),
+      setName: (e) => this.setState({ name:e.target.value }),
+      setPhone: (e) => this.setState({ phone:e.target.value }),
+      setNote: (e) => this.setState({ note:e.target.value }),
+      toggleConsent: (e) => this.setState({ consent:e.target.checked }),
+      back: () => this.setState({ step: Math.max(1, s.step-1), error:'' }),
+      submit: () => {
+        if (!s.name.trim() || !s.phone.trim()) return this.setState({ error:'Укажите имя и телефон, без них не сможем подтвердить запись.' });
+        if (!s.consent) return this.setState({ error:'Нужно согласие на обработку персональных данных.' });
+        // POST /bookings goes here
+        this.setState({ step:5, error:'' });
+      }
+    };
+  }
+}
+</script>
+</body>
+</html>

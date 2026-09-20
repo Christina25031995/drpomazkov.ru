@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,600;8..60,700&family=IBM+Plex+Sans:wght@300;400;500&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  .mj-wrap{ display:none; }
+  @media (max-width:900px){ .mj-wrap{ display:block; } }
+</style>
+</helmet>
+
+<section class="mj-wrap" data-screen-label="Мобильный путь пациента" style="background:#f3f1ea; color:#1b1a18; font-family:'IBM Plex Sans',-apple-system,sans-serif; padding:40px 20px 48px;">
+
+  <div style="font-family:'IBM Plex Mono',monospace; font-size:11.5px; letter-spacing:0.14em; text-transform:uppercase; color:rgba(27,26,24,0.72);">Путь пациента</div>
+  <div style="height:1px; background:rgba(27,26,24,0.2); margin-top:12px;"></div>
+
+  <h2 style="margin:22px 0 0; font-family:'Source Serif 4',Georgia,serif; font-weight:700; text-transform:uppercase; font-size:29px; line-height:1.04; text-wrap:balance;">Операция — только одна из семи точек</h2>
+
+  <div style="margin-top:22px; display:flex; gap:5px;">
+    <sc-for list="{{ bars }}" as="b" hint-placeholder-count="7">
+      <button type="button" onClick="{{ b.pick }}" style="flex:1; height:30px; padding:0; background:none; border:0; display:flex; align-items:center; cursor:pointer;">
+        <i style="width:100%; height:2px; display:block; background:{{ b.bg }};"></i>
+      </button>
+    </sc-for>
+  </div>
+
+  <div style="margin-top:14px; min-height:210px;">
+    <div style="font-family:'IBM Plex Mono',monospace; font-size:11.5px; letter-spacing:0.16em; color:#8a6a3c;">{{ index }}</div>
+    <div style="margin-top:10px; font-family:'Source Serif 4',Georgia,serif; font-weight:600; text-transform:uppercase; font-size:25px; line-height:1.08;">{{ title }}</div>
+    <p style="margin:12px 0 0; font-size:15.5px; line-height:1.6; color:rgba(27,26,24,0.78); text-wrap:pretty;">{{ text }}</p>
+  </div>
+
+  <div style="margin-top:18px; display:flex; gap:10px;">
+    <button type="button" onClick="{{ prev }}" style="flex:1; min-height:48px; border:1px solid rgba(27,26,24,0.24); background:none; color:#1b1a18; font-family:'IBM Plex Mono',monospace; font-size:11.5px; letter-spacing:0.16em; text-transform:uppercase;">← Назад</button>
+    <button type="button" onClick="{{ next }}" style="flex:1; min-height:48px; border:1px solid #1b1a18; background:#1b1a18; color:#f4f1ea; font-family:'IBM Plex Mono',monospace; font-size:11.5px; letter-spacing:0.16em; text-transform:uppercase;">Далее →</button>
+  </div>
+
+  <div style="margin-top:36px; padding-top:20px; border-top:1px solid rgba(27,26,24,0.16);">
+    <div style="font-family:'IBM Plex Mono',monospace; font-size:11px; letter-spacing:0.16em; text-transform:uppercase; color:rgba(27,26,24,0.62);">Жизнь после</div>
+    <p style="margin:12px 0 0; font-family:'Source Serif 4',Georgia,serif; font-weight:600; font-size:21px; line-height:1.22; text-wrap:pretty;">«Я надела новое красивое платье и насладилась своей фигурой».</p>
+    <div style="margin-top:12px; display:flex; gap:14px; flex-wrap:wrap; font-family:'IBM Plex Mono',monospace; font-size:11px; letter-spacing:0.1em; text-transform:uppercase; color:rgba(27,26,24,0.7);">
+      <span>Дарья · после маммопластики</span>
+      <a href="https://prodoctorov.ru/" target="_blank" rel="noopener" style="color:rgba(27,26,24,0.62); text-decoration:underline; text-underline-offset:3px;">Отзыв ↗</a>
+    </div>
+  </div>
+</section>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:414,&quot;height&quot;:860}}">
+class Component extends DCLogic {
+  state = { i: 0 };
+  steps(){
+    return [
+      ['Консультация','Разбираем запрос и анатомию, обсуждаем возможные варианты и ограничения. Здесь же индивидуальные вопросы, которые влияют на решение.'],
+      ['Решение','Выбираем путь вместе: что меняем, что сохраняем и где меньшее вмешательство честнее.'],
+      ['Подготовка','Анализы и обследования, ответы на оставшиеся вопросы, психологическая подготовка к операции и к периоду после неё.'],
+      ['Операция','План, согласованный на консультации, выполняется без импровизаций по объёму.'],
+      ['Первые дни','Связь с хирургом и командой остаётся: на вопросы отвечают, а не откладывают до следующего приёма.'],
+      ['Восстановление','Возвращение к обычной жизни идёт у всех по-своему, темп обсуждается на контрольных встречах.'],
+      ['Контроль результата','Окончательную форму оценивают не сразу, когда ткани окончательно сядут.']
+    ];
+  }
+  renderVals(){
+    const st = this.steps(); const i = this.state.i;
+    return {
+      index: String(i+1).padStart(2,'0') + ' / 07',
+      title: st[i][0],
+      text: st[i][1],
+      bars: st.map((_, n) => ({ bg: n <= i ? '#1b1a18' : 'rgba(27,26,24,0.2)', pick: () => this.setState({ i:n }) })),
+      prev: () => this.setState({ i: Math.max(0, i-1) }),
+      next: () => this.setState({ i: Math.min(st.length-1, i+1) })
+    };
+  }
+}
+</script>
+</body>
+</html>
