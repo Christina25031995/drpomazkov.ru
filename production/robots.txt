@@ -1,0 +1,5 @@
+# STAGING — not launched yet. Disallow all crawling until a real
+# domain is set and this file is switched to "Allow: /" at launch.
+# See README-DEPLOY.md.
+User-agent: *
+Disallow: /

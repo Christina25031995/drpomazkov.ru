@@ -1,0 +1,23 @@
+# OS junk
+.DS_Store
+Thumbs.db
+
+# Editor/IDE
+.vscode/
+.idea/
+*.swp
+
+# Env / credentials — never commit real secrets
+.env
+.env.*
+*.pem
+*.key
+!production/assets/*.otf
+!production/assets/*.ttf
+
+# Logs
+*.log
+npm-debug.log*
+
+# Local preview server artifacts
+*.pid
