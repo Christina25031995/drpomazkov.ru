@@ -239,6 +239,7 @@ input,textarea{ font-family:inherit; }
 .cs-dec-tags .accent{ color:#8a6a3c; }
 .cs-dec-title{ margin:clamp(12px,1.8vh,20px) 0 0; font-weight:600; text-transform:uppercase; font-size:clamp(24px,3.1vw,50px); line-height:1.03; letter-spacing:-0.006em; }
 .cs-dec-sub{ margin:clamp(10px,1.6vh,18px) 0 0; font-weight:400; font-size:clamp(14px,1.1vw,16px); line-height:1.54; color:rgba(27,26,24,0.74); white-space:nowrap; }
+.cs-dec-sub--note{ white-space:normal; max-width:48ch; text-wrap:pretty; }
 .cs-dec-pull{ margin:clamp(16px,2.2vh,26px) 0 0; font-style:italic; font-weight:400; font-size:clamp(16px,1.5vw,23px); line-height:1.36; color:rgba(27,26,24,0.84); max-width:40ch; }
 .cs-did{ margin:9px 0 0; font-size:clamp(13px,1vw,15px); line-height:1.56; color:rgba(27,26,24,0.74); text-wrap:pretty; }
 .cs-hr{ height:1px; background:rgba(27,26,24,0.13); margin-top:clamp(12px,1.8vh,20px); }

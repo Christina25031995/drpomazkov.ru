@@ -28,11 +28,14 @@
     v.addEventListener('timeupdate', guard);
   })();
 
-  /* ================= Russian orphan/widow fix (mobile only) ========== */
+  /* ================= Russian orphan/widow fix (all viewports) ========= */
+  // Runs everywhere, not just mobile -- dynamically-set text (Results,
+  // Explains) needs the same protection against a short preposition or
+  // a dash being orphaned at a line break.
   (function orphanFix() {
-    var short = /(^|[\s(«"])([а-яёa-z]{1,3}|не|как|или|для|что|это)\s+/gi;
+    var shortWord = /(^|[\s(«"])([а-яёa-z]{1,3}|не|как|или|для|что|это)\s+/gi;
+    var dash = /\s*—\s*/g;
     var run = function () {
-      if (!isMobile()) return;
       var walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT);
       var nodes = [];
       var n;
@@ -41,8 +44,10 @@
         var p = node.parentElement;
         if (!p || p.closest('script,style')) return;
         var v = node.nodeValue;
-        if (!v || v.indexOf(' ') === -1) return;
-        var next = v.replace(short, function (m, a, w) { return a + w + ' '; });
+        if (!v || (v.indexOf(' ') === -1 && v.indexOf('—') === -1)) return;
+        var next = v
+          .replace(shortWord, function (m, a, w) { return a + w + ' '; })
+          .replace(dash, ' — ');
         if (next !== v) node.nodeValue = next;
       });
     };
