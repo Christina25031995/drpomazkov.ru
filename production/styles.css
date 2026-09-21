@@ -79,7 +79,7 @@ input,textarea{ font-family:inherit; }
 .b2-photo-3{ inset:0; }
 .b2-photo-5{ left:-2%; top:0; width:80%; height:100%; -webkit-mask-image:linear-gradient(to left, rgba(0,0,0,0) 0%, rgba(0,0,0,0.55) 12%, #000 28%); mask-image:linear-gradient(to left, rgba(0,0,0,0) 0%, rgba(0,0,0,0.55) 12%, #000 28%); }
 .b2-photo-6{ right:-2%; top:0; width:66%; height:100%; -webkit-mask-image:linear-gradient(to right, rgba(0,0,0,0) 0%, rgba(0,0,0,0.5) 16%, #000 40%); mask-image:linear-gradient(to right, rgba(0,0,0,0) 0%, rgba(0,0,0,0.5) 16%, #000 40%); }
-.b2-photo-6 img{ position:absolute; inset:0; object-position:26% 14%; transform:scaleX(-1); transform-origin:center; }
+.b2-photo-6 img{ position:absolute; inset:0; width:135%; left:-18%; object-position:30% 14%; }
 .b2-photo-1 img{ object-position:58% 12%; }
 .b2-photo-2 img{ object-position:52% 32%; }
 .b2-photo-3 img{ object-position:14% 46%; }
@@ -181,6 +181,8 @@ input,textarea{ font-family:inherit; }
 .meta-grid{ display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:clamp(18px,2.4vw,40px); margin-top:22px; }
 .meta-grid-label{ font-family:'IBM Plex Mono',monospace; font-size:10.5px; letter-spacing:0.2em; text-transform:uppercase; color:rgba(244,244,243,0.48); margin-bottom:9px; }
 .meta-grid-value{ font-size:14.5px; line-height:1.65; color:#d7d5d1; }
+.ba-expert{ margin:clamp(18px,2.4vh,26px) 0 0; padding-top:clamp(14px,2vh,20px); border-top:1px solid rgba(244,244,243,0.12); font-family:'Source Serif 4',Georgia,serif; font-style:italic; font-size:clamp(14px,1.15vw,17px); line-height:1.5; color:rgba(244,244,243,0.82); max-width:56ch; }
+.ba-expert[hidden]{ display:none; }
 @media (max-width:900px){
   .ba-grid{ grid-template-columns:1fr !important; }
   .ba-rail{ flex-direction:row !important; overflow-x:auto !important; gap:22px !important; }
@@ -289,6 +291,7 @@ input,textarea{ font-family:inherit; }
 .ap5-quote span{ display:block; white-space:nowrap; }
 .ap5-quote-src{ margin-top:11px; font-family:'IBM Plex Mono',monospace; font-size:10.5px; letter-spacing:0.2em; text-transform:uppercase; color:rgba(244,244,243,0.68); }
 .ap5-principles{ margin-top:clamp(22px,3.2vh,38px); display:grid; gap:7px; font-family:'IBM Plex Mono',monospace; font-size:10.5px; letter-spacing:0.13em; text-transform:uppercase; color:rgba(244,244,243,0.74); }
+.ap5-principle-note{ margin:14px 0 0; font-family:'Source Serif 4',Georgia,serif; font-style:italic; font-weight:400; font-size:clamp(13px,1.05vw,15px); line-height:1.5; color:rgba(244,244,243,0.68); max-width:44ch; }
 @media (max-width:900px){
   #approach{ padding:28px 20px 120px !important; min-height:100svh !important; display:block !important; }
   #approach h2 span{ font-size:31px !important; white-space:normal !important; }
