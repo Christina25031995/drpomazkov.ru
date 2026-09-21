@@ -13,7 +13,7 @@
 }
 
 *{ box-sizing:border-box; }
-html,body{ margin:0; }
+html,body{ margin:0; background:var(--ink-dark); }
 body{ -webkit-font-smoothing:antialiased; hyphens:none; overflow-x:hidden; }
 a{ text-decoration:none; }
 img{ max-width:none; }
@@ -46,6 +46,11 @@ input,textarea{ font-family:inherit; }
 .hero-eyebrow{ font-family:'IBM Plex Mono',monospace; font-size:13.6px; letter-spacing:0.16em; text-transform:uppercase; color:#c9c9c8; display:flex; align-items:center; gap:12px; }
 .hero-eyebrow i{ width:22px; height:1px; background:rgba(244,244,243,0.4); display:block; flex-shrink:0; }
 .hero-title{ position:relative; margin:2px 0 32px; font-family:'Source Serif 4',Georgia,serif; font-weight:700; font-size:clamp(52px,11vw,148px); line-height:0.94; letter-spacing:0.01em; color:var(--ink-light); text-transform:uppercase; text-wrap:balance; }
+.hero-title-mask{ display:inline-block; overflow:visible; }
+.hero-title-mask.pmz-masking{ overflow:hidden; }
+.hero-title-line{ display:inline-block; }
+#hero-opening{ position:absolute; inset:0; z-index:5; background:var(--ink-dark); pointer-events:none; }
+#hero-opening[hidden]{ display:none; }
 .hero-sig{ position:absolute; left:58%; bottom:-0.17em; font-family:'Shlapak Script',cursive; font-weight:400; font-size:0.33em; line-height:1; letter-spacing:0.01em; color:#f7f5f1; text-transform:none; white-space:nowrap; transform:rotate(-2deg); transform-origin:left center; pointer-events:none; }
 .hero-cta-row{ display:flex; flex-wrap:wrap; align-items:center; justify-content:center; gap:10px 16px; margin-top:22px; }
 .btn{ font-size:13.5px; font-weight:500; letter-spacing:0.01em; padding:13px 24px; border-radius:2px; display:inline-flex; align-items:center; gap:8px; white-space:nowrap; }
@@ -260,6 +265,9 @@ input,textarea{ font-family:inherit; }
   .cs-photos{ grid-template-columns:minmax(0,1fr) !important; }
   .cs-result-frame{ height:min(66vh,560px) !important; }
   .cs-before-frame{ width:min(54%,280px) !important; align-self:start !important; }
+  /* No real photo yet — don't let the placeholder frame dominate the screen. */
+  .cs-result-frame:has(.ba-placeholder){ height:220px !important; }
+  .cs-before-frame:has(.ba-placeholder){ width:100% !important; aspect-ratio:auto !important; height:160px !important; }
 }
 
 /* ===== Block 05 — Подход ============================================ */
@@ -505,7 +513,7 @@ input,textarea{ font-family:inherit; }
 
 /* ===== Mobile shell: bottom nav + approach subnav + booking sheet ==== */
 .mb-shell{ display:none; font-family:'IBM Plex Sans',-apple-system,sans-serif; }
-@media (max-width:900px){ .mb-shell{ display:block; } body{ padding-bottom:70px !important; } html,body{ overflow-x:hidden !important; } }
+@media (max-width:900px){ .mb-shell{ display:block; } html,body{ overflow-x:hidden !important; } }
 .mb-subnav{ position:fixed; left:0; right:0; top:0; z-index:88; display:flex; gap:0; overflow-x:auto; background:rgba(12,12,13,0.96); border-bottom:1px solid rgba(244,244,243,0.12); padding-top:env(safe-area-inset-top); }
 .mb-subnav[hidden]{ display:none; }
 .mb-subnav button{ flex:1 0 auto; padding:0 14px; min-height:46px; border:0; background:none; white-space:nowrap; font-family:'IBM Plex Mono',monospace; font-size:10.5px; letter-spacing:0.1em; text-transform:uppercase; color:rgba(244,244,243,0.55); border-bottom:2px solid transparent; }

@@ -79,6 +79,7 @@
       stepsWrap.appendChild(b);
       return b;
     });
+    var lastActiveStep = -1; // motion hook only — read by motion/requests.js
 
     function goTo(i) {
       var range = section.offsetHeight - window.innerHeight;
@@ -93,6 +94,10 @@
       var x = p * 6.6 - 0.6;
 
       var active = Math.min(5, Math.max(0, Math.floor(x)));
+      if (active !== lastActiveStep) {
+        lastActiveStep = active;
+        document.dispatchEvent(new CustomEvent('pmz:request-step', { detail: { index: active } }));
+      }
       var t = Math.min(1, Math.max(0, x - active));
       var f = Math.min(1, Math.max(0, (t - 0.78) / 0.22));
       var w = [0, 0, 0, 0, 0, 0];
@@ -220,6 +225,7 @@
       document.getElementById('ba-result').textContent = c.result;
       afterClip.style.clipPath = 'inset(0 0 0 ' + div + '%)';
       divider.style.left = div + '%';
+      document.dispatchEvent(new CustomEvent('pmz:results-step', { detail: { index: pick } }));
     }
     render();
   })();
@@ -261,6 +267,7 @@
       document.getElementById('ex-num').textContent = ITEMS[i].num;
       document.getElementById('ex-title').textContent = ITEMS[i].title;
       document.getElementById('ex-text').textContent = ITEMS[i].text;
+      document.dispatchEvent(new CustomEvent('pmz:explains-step', { detail: { index: i } }));
     }
     render();
   })();
@@ -295,6 +302,7 @@
       document.getElementById('mj-index').textContent = String(i + 1).padStart(2, '0') + ' / 07';
       document.getElementById('mj-title').textContent = STEPS[i][0];
       document.getElementById('mj-text').textContent = STEPS[i][1];
+      document.dispatchEvent(new CustomEvent('pmz:journey-step', { detail: { index: i, total: STEPS.length } }));
     }
     render();
   })();
@@ -375,6 +383,7 @@
     var actions = document.getElementById('bk-actions');
     if (!content) return;
     var flow = new Booking.BookingFlow(21);
+    window.PMZ_BOOKING_DESKTOP = flow; // motion hook only — read by motion/booking.js
 
     function render() {
       document.getElementById('bk-step-label').textContent = flow.stepLabel();
@@ -501,24 +510,37 @@
       location.hash = hash;
     }
 
-    function navigateTo(view) {
+    // Route-transition lock: swallow a second tap that lands mid-way
+    // through the ~0.4s view-change animation, without ever blocking
+    // the UI visibly or for long.
+    var navLocked = false;
+    function withNavLock(fn) {
+      return function () {
+        if (navLocked) return;
+        navLocked = true;
+        setTimeout(function () { navLocked = false; }, 420);
+        fn.apply(null, arguments);
+      };
+    }
+
+    var navigateTo = withNavLock(function (view) {
       state.view = view;
       state.sheetOpen = false;
       pushHash(VIEW_HASH[view] || '#/');
       render();
       toTop();
-    }
-    function openSheet(tab) {
+    });
+    var openSheet = withNavLock(function (tab) {
       state.sheetOpen = true;
       state.tab = tab || 'booking';
       pushHash('#/booking');
       render();
-    }
-    function closeSheet() {
+    });
+    var closeSheet = withNavLock(function () {
       state.sheetOpen = false;
       pushHash(VIEW_HASH[state.view] || '#/');
       render();
-    }
+    });
     document.getElementById('mb-sheet-close').addEventListener('click', closeSheet);
 
     window.addEventListener('hashchange', function () {
@@ -554,6 +576,7 @@
 
     // ---- booking flow bound to the sheet ----
     var mobileFlow = new Booking.BookingFlow(16);
+    window.PMZ_BOOKING_MOBILE = mobileFlow; // motion hook only — read by motion/booking.js
     function renderBookingTab() {
       var f = mobileFlow;
       var html = '<div class="mb-bk-progress"><div class="mb-bk-progress-track"><div class="mb-bk-progress-fill" style="width:' + f.progressPct() + '"></div></div>' +
@@ -641,6 +664,9 @@
         else if (state.tab === 'price') renderPriceTab();
         else renderContactsTab();
       }
+      document.dispatchEvent(new CustomEvent('pmz:view-change', {
+        detail: { view: state.view, sub: state.sub, sheetOpen: state.sheetOpen, navHidden: navHidden, showSubnav: showSubnav }
+      }));
     }
 
     syncBody();
