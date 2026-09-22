@@ -1,4 +1,4 @@
 {
   "_comment": "Single source of truth for the site's base URL. Do NOT edit this value by hand and expect it to propagate — run scripts/set-domain.sh instead, which updates this file AND every static file (index.html, legal pages, sitemap.xml, robots.txt) that needs the real domain. Until a real domain is set, this stays a deliberately invalid placeholder and the site stays noindex.",
-  "baseUrl": "https://SET-DOMAIN-BEFORE-LAUNCH.invalid"
+  "baseUrl": "https://drpomazkov.ru"
 }
