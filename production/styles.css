@@ -79,7 +79,7 @@ input,textarea{ font-family:inherit; }
 .b2-photo-3{ inset:0; }
 .b2-photo-6{ left:-2%; top:0; width:66%; height:100%; -webkit-mask-image:linear-gradient(to left, rgba(0,0,0,0) 0%, rgba(0,0,0,0.5) 16%, #000 40%); mask-image:linear-gradient(to left, rgba(0,0,0,0) 0%, rgba(0,0,0,0.5) 16%, #000 40%); }
 .b2-photo-6 img{ position:absolute; inset:0; width:100%; object-position:center top; }
-.b2-photo-1 img{ object-position:58% 12%; }
+.b2-photo-1 img{ object-fit:contain; object-position:center top; }
 .b2-photo-2 img{ object-position:52% 32%; }
 .b2-photo-3 img{ object-position:14% 46%; }
 .b2-fade-top{ position:absolute; inset:0 0 auto 0; height:18%; z-index:2; background:linear-gradient(to bottom, rgba(241,238,232,0.8) 0%, rgba(241,238,232,0) 100%); pointer-events:none; opacity:0; }
