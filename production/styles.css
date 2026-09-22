@@ -74,7 +74,7 @@ input,textarea{ font-family:inherit; }
 .b2-warm{ position:absolute; inset:0; z-index:0; background:#efece6; }
 .b2-photo{ position:absolute; overflow:hidden; z-index:1; }
 .b2-photo img{ width:100%; height:100%; object-fit:cover; display:block; }
-.b2-photo-1{ left:46%; top:-6%; width:54%; height:108%; -webkit-mask-image:linear-gradient(100deg, rgba(0,0,0,0) 0%, rgba(0,0,0,0.5) 8%, #000 22%); mask-image:linear-gradient(100deg, rgba(0,0,0,0) 0%, rgba(0,0,0,0.5) 8%, #000 22%); }
+.b2-photo-1{ left:46%; top:-6%; width:54%; height:108%; }
 .b2-photo-2{ right:-2%; top:0; width:64%; height:100%; -webkit-mask-image:linear-gradient(to right, rgba(0,0,0,0) 0%, rgba(0,0,0,0.6) 14%, #000 30%); mask-image:linear-gradient(to right, rgba(0,0,0,0) 0%, rgba(0,0,0,0.6) 14%, #000 30%); }
 .b2-photo-3{ inset:0; }
 .b2-photo-6{ right:-2%; top:0; width:66%; height:100%; -webkit-mask-image:linear-gradient(to right, rgba(0,0,0,0) 0%, rgba(0,0,0,0.5) 16%, #000 40%); mask-image:linear-gradient(to right, rgba(0,0,0,0) 0%, rgba(0,0,0,0.5) 16%, #000 40%); }
@@ -86,7 +86,7 @@ input,textarea{ font-family:inherit; }
 .b2-fade-bottom{ position:absolute; inset:auto 0 0 0; height:16%; z-index:2; background:linear-gradient(to top, rgba(241,238,232,0.78) 0%, rgba(241,238,232,0) 100%); pointer-events:none; opacity:0; }
 .b2-scrim{ display:none; position:absolute; inset:0; z-index:2; background:linear-gradient(to top, rgba(6,6,7,0.9) 0%, rgba(6,6,7,0.52) 44%, rgba(6,6,7,0.04) 80%); pointer-events:none; }
 .b2-type{ position:absolute; z-index:3; pointer-events:none; }
-.b2-type-1{ left:clamp(22px,5vw,72px); top:27%; width:56%; color:var(--ink-light); }
+.b2-type-1{ left:clamp(22px,5vw,72px); top:33%; width:56%; color:var(--ink-light); }
 .b2-eyebrow{ font-family:'IBM Plex Mono',monospace; font-size:11.5px; letter-spacing:0.2em; text-transform:uppercase; color:rgba(244,244,243,0.7); margin-bottom:22px; display:flex; gap:18px; }
 .b2-lead{ font-weight:300; text-transform:uppercase; line-height:1.02; letter-spacing:0.02em; font-size:clamp(20px,2.7vw,40px); }
 .b2-headline{ line-height:0.94; font-size:clamp(34px,5.6vw,92px); white-space:nowrap; }
