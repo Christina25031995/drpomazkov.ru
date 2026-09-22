@@ -60,12 +60,12 @@
     var stage = document.getElementById('b2-stage');
     var section = document.getElementById('directions');
     if (!stage || !section) return;
-    var SCALES = [1.46, 1.05, 1.04, 1, 1.02, 1];
-    var PAR = [20, 22, 16, 0, 24, 18];
-    var photos = ['b2-p1', 'b2-p2', 'b2-p3', null, 'b2-p5', 'b2-p6'].map(function (id) {
+    var SCALES = [1.46, 1.05, 1.04, 1, 1];
+    var PAR = [20, 22, 16, 0, 18];
+    var photos = ['b2-p1', 'b2-p2', 'b2-p3', null, 'b2-p6'].map(function (id) {
       return id ? document.getElementById(id) : null;
     });
-    var types = ['b2-t1', 'b2-t2', 'b2-t3', 'b2-t4', 'b2-t5', 'b2-t6'].map(function (id) {
+    var types = ['b2-t1', 'b2-t2', 'b2-t3', 'b2-t4', 'b2-t6'].map(function (id) {
       return document.getElementById(id);
     });
     var warmEl = document.getElementById('b2-warm');
@@ -76,7 +76,7 @@
     var heading = document.getElementById('b2-heading');
     var progressEl = document.getElementById('b2-progress');
     var stepsWrap = document.getElementById('b2-steps');
-    var stepBtns = [0, 1, 2, 3, 4, 5].map(function (i) {
+    var stepBtns = [0, 1, 2, 3, 4].map(function (i) {
       var b = document.createElement('button');
       b.type = 'button';
       b.textContent = '0' + (i + 1);
@@ -89,25 +89,25 @@
     function goTo(i) {
       var range = section.offsetHeight - window.innerHeight;
       var top = section.getBoundingClientRect().top + window.scrollY;
-      window.scrollTo({ top: top + ((i + 1) / 6.6) * range, behavior: 'smooth' });
+      window.scrollTo({ top: top + ((i + 1) / 5.6) * range, behavior: 'smooth' });
     }
 
     function tick() {
       var range = section.offsetHeight - window.innerHeight;
       var r = section.getBoundingClientRect();
       var p = range > 0 ? Math.min(1, Math.max(0, -r.top / range)) : 0;
-      var x = p * 6.6 - 0.6;
+      var x = p * 5.6 - 0.6;
 
-      var active = Math.min(5, Math.max(0, Math.floor(x)));
+      var active = Math.min(4, Math.max(0, Math.floor(x)));
       if (active !== lastActiveStep) {
         lastActiveStep = active;
         document.dispatchEvent(new CustomEvent('pmz:request-step', { detail: { index: active } }));
       }
       var t = Math.min(1, Math.max(0, x - active));
       var f = Math.min(1, Math.max(0, (t - 0.78) / 0.22));
-      var w = [0, 0, 0, 0, 0, 0];
+      var w = [0, 0, 0, 0, 0];
       w[active] = 1 - f;
-      if (active < 5) w[active + 1] = f;
+      if (active < 4) w[active + 1] = f;
       var intro = Math.min(1, Math.max(0, 1 - (x + 0.6) / 0.5));
       var warm = w[2];
       var lerp = function (a, b, k) { return Math.round(a + (b - a) * k); };
@@ -122,7 +122,7 @@
       scrimEl.style.opacity = warm;
       fadeTopEl.style.opacity = warm;
       fadeBottomEl.style.opacity = warm;
-      [0, 1, 2, 4, 5].forEach(function (i) {
+      [0, 1, 2, 4].forEach(function (i) {
         var el = photos[i];
         if (!el) return;
         el.style.opacity = w[i];
@@ -133,15 +133,15 @@
       types.forEach(function (el, i) {
         if (!el) return;
         el.style.opacity = w[i];
-        el.style.transform = i === 5 ? 'translateY(calc(-50% + ' + ty + 'px))' : 'translateY(' + ty + 'px)';
+        el.style.transform = i === 4 ? 'translateY(calc(-50% + ' + ty + 'px))' : 'translateY(' + ty + 'px)';
       });
 
       heading.style.color = ink;
       headingQ.style.opacity = intro;
       progressEl.style.background = ink;
-      progressEl.style.width = (Math.min(100, Math.max(0, ((x + 0.6) / 6.6) * 100))).toFixed(1) + '%';
+      progressEl.style.width = (Math.min(100, Math.max(0, ((x + 0.6) / 5.6) * 100))).toFixed(1) + '%';
 
-      var shown = w[active] >= 0.5 ? active : Math.min(5, active + 1);
+      var shown = w[active] >= 0.5 ? active : Math.min(4, active + 1);
       stepBtns.forEach(function (b, i) {
         b.style.color = i === shown ? ink : (warm > 0.5 ? 'rgba(33,31,27,0.5)' : 'rgba(244,244,243,0.4)');
       });
@@ -181,12 +181,11 @@
     if (!rail || !stage) return;
 
     var CASES = [
-      { proc: 'Блефаропластика', title: 'Верхняя блефаропластика', task: 'Тяжёлое верхнее веко, взгляд читается уставшим.', did: 'Иссечение избытка кожи верхнего века, разрез в естественной складке.', result: 'Взгляд открытый, форма глаза сохранена.', term: '3 месяца', expert: 'Развести избыток кожи, опущение брови и птоз — главная задача консультации. От этого зависит весь план.' },
-      { proc: 'Маммопластика', title: 'Коррекция тубулярной формы груди', task: 'Асимметрия объёма и тубулярная форма.', did: 'Импланты разного объёма + симметризация ареол.', result: 'Симметрия и естественная форма.', term: '6 месяцев' },
-      { proc: 'Абдоминопластика', title: 'Абдоминопластика после родов', task: 'Диастаз и избыток кожи после беременности.', did: 'Абдоминопластика с ушиванием диастаза.', result: 'Восстановленный контур живота.', term: '4 месяца' },
-      { proc: 'Липосакция', title: 'Коррекция контуров тела', task: 'Локальные отложения, не уходящие при весе в норме.', did: 'Липосакция фланков и нижней зоны живота.', result: 'Ровный контур без потери объёма.', term: '3 месяца' },
-      { proc: 'Липоскульптурирование', title: 'Липоскульптурирование силуэта', task: 'Форма тела читается плоско, нет линии.', did: 'Перераспределение собственной жировой ткани.', result: 'Подчёркнутая линия силуэта.', term: '5 месяцев' },
-      { proc: 'Подтяжка лица', title: 'Подтяжка лица', task: 'Опущение тканей средней зоны лица.', did: 'Подтяжка с сохранением индивидуальных черт.', result: 'Свежесть без эффекта «нового лица».', term: '6 месяцев' }
+      { proc: 'Блефаропластика', title: 'Верхняя блефаропластика', task: 'Тяжёлое верхнее веко, взгляд читается уставшим.', did: 'Иссечение избытка кожи верхнего века, разрез в естественной складке.', result: 'Взгляд открытый, форма глаза сохранена.', term: '3 месяца', expert: 'Развести избыток кожи, опущение брови и птоз — главная задача консультации. <br>От этого зависит весь план.' },
+      { proc: 'Маммопластика', title: 'Коррекция тубулярной формы груди', task: 'Асимметрия объёма и тубулярная форма.', did: 'Импланты разного объёма + симметризация ареол.', result: 'Симметрия и естественная форма.', term: '6 месяцев', expert: 'Если анатомия и объём собственных тканей позволяют, форму груди можно скорректировать без импланта.' },
+      { proc: 'Абдоминопластика', title: 'Абдоминопластика после родов', task: 'Диастаз и избыток кожи после беременности.', did: 'Абдоминопластика с ушиванием диастаза.', result: 'Восстановленный контур живота.', term: '4 месяца', expert: 'Липосакция не заменяет абдоминопластику, если проблема связана с избытком кожи или диастазом.' },
+      { proc: 'Липосакция', title: 'Коррекция контуров тела', task: 'Локальные отложения, не уходящие при весе в норме.', did: 'Липосакция фланков и нижней зоны живота.', result: 'Ровный контур без потери объёма.', term: '3 месяца', expert: 'Липосакция корректирует локальные объёмы, но не является способом похудения и не подтягивает дряблую кожу.' },
+      { proc: 'Подтяжка лица', title: 'Подтяжка лица', task: 'Опущение тканей средней зоны лица.', did: 'Подтяжка с сохранением индивидуальных черт.', result: 'Свежесть без эффекта «нового лица».', term: '6 месяцев', expert: 'Лицо стареет неравномерно: верхняя, средняя и нижняя треть требуют разных хирургических решений.' }
     ];
 
     var pick = 0, div = 50;
@@ -229,7 +228,7 @@
       document.getElementById('ba-did').textContent = c.did;
       document.getElementById('ba-result').textContent = c.result;
       var expertEl = document.getElementById('ba-expert');
-      if (c.expert) { expertEl.textContent = '«' + c.expert + '»'; expertEl.hidden = false; }
+      if (c.expert) { expertEl.innerHTML = '«' + c.expert + '»'; expertEl.hidden = false; }
       else { expertEl.hidden = true; }
       afterClip.style.clipPath = 'inset(0 0 0 ' + div + '%)';
       divider.style.left = div + '%';
@@ -244,10 +243,10 @@
     if (!list) return;
     var ITEMS = [
       { num: '01', title: 'Тяжёлое верхнее веко — не всегда блефаропластика', text: 'Одинаковая картина может быть следствием избытка кожи, опущения брови или птоза. Развести эти три состояния — главная задача консультации.' },
-      { num: '02', title: 'Почему я не удаляю жир под глазами «под ноль»', text: 'Не всегда правильное решение — удалить грыжу целиком. Если есть выраженная слёзная борозда, собственный жир можно переместить в неё и сохранить плавный переход от века к щеке.' },
-      { num: '03', title: 'Когда грудь можно поднять без импланта', text: 'Если анатомия и объём собственных тканей позволяют, верхний полюс удаётся наполнить без импланта.' },
-      { num: '04', title: 'Почему имплант чаще ставлю под мышцу — и когда делаю иначе', text: 'Субпекторально — почти всегда. Исключение — спортсменки с серьёзной нагрузкой на верхний плечевой пояс.' },
-      { num: '05', title: 'Уменьшение груди — не только про эстетику', text: 'Редукция — операция не только про эстетику, но и про качество жизни. Задача не в том, чтобы сделать как можно меньше, а в том, чтобы грудь стала соразмерной фигуре и перестала быть нагрузкой.' }
+      { num: '02', title: 'Когда грудь можно поднять без импланта', text: 'Если анатомия и объём собственных тканей позволяют, верхний полюс удаётся наполнить без импланта.' },
+      { num: '03', title: 'Почему мини-абдоминопластика подходит не всем', text: 'Если избыток кожи есть выше пупка, мини-вариант оставит его на месте. Объём операции выбирается по расположению тканей, а не по желанию сделать меньший разрез.' },
+      { num: '04', title: 'Почему я не делаю липосакцию множества зон за один раз', text: 'С каждой дополнительной зоной растёт нагрузка на организм. Если объём вмешательства становится избыточным, работу безопаснее разделить на этапы.' },
+      { num: '05', title: 'Почему deep plane не должен давать эффект натянутого лица', text: 'При deep plane кожа и SMAS перемещаются единым блоком, а основное натяжение приходится на глубокие структуры, а не на кожу.' }
     ];
     var i = 0;
     var nums = [], titles = [];
@@ -287,7 +286,7 @@
     var STEPS = [
       ['Консультация', 'Разбираем запрос и анатомию, обсуждаем возможные варианты и ограничения. Здесь же индивидуальные вопросы, которые влияют на решение.'],
       ['Решение', 'Выбираем путь вместе: что меняем, что сохраняем и где меньшее вмешательство честнее.'],
-      ['Подготовка', 'Анализы и обследования, ответы на оставшиеся вопросы, психологическая подготовка к операции и к периоду после неё.'],
+      ['Подготовка', 'После консультации я выдаю персональный список анализов. Срок годности результатов — 10 дней.'],
       ['Операция', 'План, согласованный на консультации, выполняется без импровизаций по объёму.'],
       ['Первые дни', 'Связь с хирургом и командой остаётся: на вопросы отвечают, а не откладывают до следующего приёма.'],
       ['Восстановление', 'Возвращение к обычной жизни идёт у всех по-своему, темп обсуждается на контрольных встречах.'],
@@ -424,7 +423,7 @@
           '<div class="bk-summary-row"><span>Запрос</span><span>' + flow.state.topic + '</span></div>' +
           '<div class="bk-summary-row"><span>Дата</span><span>' + flow.dateLabel() + '</span></div>' +
           '<div class="bk-summary-row"><span>Время</span><span>' + flow.state.time + '</span></div></div>' +
-          '<p class="bk-done-note">Подтвердите запись в Telegram — Филипп согласует детали лично.</p>' +
+          '<p class="bk-done-note">Подтвердите запись в Telegram</p>' +
           '<a href="' + flow.telegramLink() + '" target="_blank" rel="noopener" class="bk-tg-btn" id="bk-tg-btn">Продолжить в Telegram ↗</a>' +
           (flow.state.copied ? '<div class="bk-copied-hint">Данные записи скопированы. Отправьте сообщение Филиппу в Telegram.</div>' : '') +
           '</div>';
@@ -602,7 +601,7 @@
           '<div class="mb-summary-row"><span>Запрос</span><span>' + f.state.topic + '</span></div>' +
           '<div class="mb-summary-row"><span>Дата</span><span>' + f.dateLabel() + '</span></div>' +
           '<div class="mb-summary-row"><span>Время</span><span>' + f.state.time + '</span></div></div>' +
-          '<p class="bk-done-note">Подтвердите запись в Telegram — Филипп согласует детали лично.</p>' +
+          '<p class="bk-done-note">Подтвердите запись в Telegram</p>' +
           '<a href="' + f.telegramLink() + '" target="_blank" rel="noopener" class="mb-tg-btn" id="mb-tg-btn">Продолжить в Telegram ↗</a>' +
           (f.state.copied ? '<div class="bk-copied-hint">Данные записи скопированы. Отправьте сообщение Филиппу в Telegram.</div>' : '') +
           '<button type="button" class="mb-close-btn" id="mb-close-btn">Закрыть</button></div>';
@@ -623,7 +622,7 @@
     mobileFlow.onChange(renderBookingTab);
 
     function renderPriceTab() {
-      var rows = ['Блефаропластика', 'Маммопластика', 'Абдоминопластика', 'Липосакция', 'Липоскульптурирование', 'Подтяжка лица'];
+      var rows = ['Блефаропластика', 'Маммопластика', 'Абдоминопластика', 'Липосакция', 'Подтяжка лица'];
       tabContentEl.innerHTML = '<div style="margin-top:26px;">' +
         '<div class="mb-step-title" style="font-weight:700; text-transform:uppercase; font-size:26px; line-height:1.06;">Стоимость зависит от объёма вмешательства</div>' +
         '<p class="mb-step-sub" style="font-size:14.5px; line-height:1.6;">Точную сумму Филипп называет на консультации, после осмотра.</p>' +
@@ -640,13 +639,14 @@
         '<a href="https://www.instagram.com/dr.pomazkoff/" target="_blank" rel="noopener">Instagram · @dr.pomazkoff</a></div>' +
         '<div class="ct-label" style="margin-top:22px;">Приём в клинике</div>' +
         '<div class="ct-clinic" style="color:rgba(27,26,24,0.8);">' +
-        '<div>ООО «Клиника ОстМедКонсалт»</div><div>Санкт-Петербург, ул. Шпалерная, д. 36, лит. А</div><div>Лицензия Л041-01148-78/00349385</div></div>' +
+        '<div>ООО «Клиника ОстМедКонсалт»</div><div>Санкт-Петербург, ул. Шпалерная, д. 36, лит. А</div><div>Лицензия Л041-01148-78/00349385, выдана Комитетом по здравоохранению Санкт-Петербурга</div></div>' +
         '<div class="mb-legal-links">' +
         '<a href="legal/privacy.html">Политика обработки персональных данных</a>' +
         '<a href="legal/cookie-policy.html">Политика cookie</a>' +
         '<a href="legal/cookie-policy.html#clinic">Сведения о клинике</a>' +
+        '<a href="https://ostmed.ru/price/" target="_blank" rel="noopener">Прайс-лист клиники ↗</a>' +
         '<button type="button" id="mb-cookie-settings">Настройки cookie</button></div>' +
-        '<p class="mb-step-sub" style="margin-top:22px; font-size:12.5px; line-height:1.6;">Имеются противопоказания. Необходима консультация специалиста. Информация на сайте носит информационный характер и не является публичной офертой.</p>' +
+        '<p class="mb-step-sub" style="margin-top:22px; font-size:12.5px; line-height:1.6;">Имеются противопоказания. Необходима консультация специалиста. Информация на сайте носит информационный характер и не является публичной офертой. Часть визуальных материалов на сайте создана с применением технологий искусственного интеллекта и используется в иллюстративных целях. AI-материалы не являются изображением результатов медицинских вмешательств.</p>' +
         '</div>';
       document.getElementById('mb-cookie-settings').addEventListener('click', Cookie.openSettings);
     }
