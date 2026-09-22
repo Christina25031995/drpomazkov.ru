@@ -514,6 +514,8 @@ input,textarea{ font-family:inherit; }
 .ct-legal{ margin-top:clamp(30px,4.6vh,58px); padding-top:16px; border-top:1px solid rgba(244,244,243,0.14); display:flex; justify-content:space-between; gap:24px; font-size:12.5px; line-height:1.6; color:rgba(244,244,243,0.62); }
 .ct-legal-text{ flex:1; display:flex; gap:40px; }
 .ct-legal-text p{ margin:0; flex:1; }
+.ct-legal-text p span{ display:block; }
+.ct-legal-text p span + span{ margin-top:0.35em; }
 .ct-copy{ white-space:nowrap; flex-shrink:0; }
 .ct-copy a{ text-decoration:underline; text-decoration-color:rgba(244,244,243,0.3); text-underline-offset:3px; }
 @media (max-width:900px){
