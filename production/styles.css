@@ -177,7 +177,7 @@ input,textarea{ font-family:inherit; }
 .meta-grid{ display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:clamp(18px,2.4vw,40px); margin-top:22px; }
 .meta-grid-label{ font-family:'IBM Plex Mono',monospace; font-size:10.5px; letter-spacing:0.2em; text-transform:uppercase; color:rgba(244,244,243,0.48); margin-bottom:9px; }
 .meta-grid-value{ font-size:14.5px; line-height:1.65; color:#d7d5d1; }
-.ba-expert{ margin:clamp(18px,2.4vh,26px) 0 0; padding-top:clamp(14px,2vh,20px); border-top:1px solid rgba(244,244,243,0.12); font-family:'Source Serif 4',Georgia,serif; font-style:italic; font-size:clamp(14px,1.15vw,17px); line-height:1.5; color:rgba(244,244,243,0.82); max-width:56ch; }
+.ba-expert{ margin:clamp(18px,2.4vh,26px) 0 0; padding-top:clamp(14px,2vh,20px); border-top:1px solid rgba(244,244,243,0.12); font-family:'Source Serif 4',Georgia,serif; font-style:italic; font-size:clamp(16px,1.3vw,19px); line-height:1.48; color:rgba(244,244,243,0.82); max-width:56ch; }
 .ba-expert:has(span){ max-width:none; }
 .ba-expert[hidden]{ display:none; }
 .ba-expert span{ display:block; white-space:nowrap; }
@@ -512,9 +512,9 @@ input,textarea{ font-family:inherit; }
 .ct-docs a, .ct-docs button{ color:rgba(244,244,243,0.82); text-decoration:underline; text-decoration-color:rgba(244,244,243,0.28); text-underline-offset:4px; }
 .ct-docs button{ padding:0; background:none; border:0; text-align:left; cursor:pointer; font-family:inherit; font-size:14.5px; }
 .ct-legal{ margin-top:clamp(30px,4.6vh,58px); padding-top:16px; border-top:1px solid rgba(244,244,243,0.14); display:flex; justify-content:space-between; gap:24px; font-size:12.5px; line-height:1.6; color:rgba(244,244,243,0.62); }
-.ct-legal-text{ max-width:76ch; display:flex; gap:24px; }
+.ct-legal-text{ flex:1; display:flex; gap:40px; }
 .ct-legal-text p{ margin:0; flex:1; }
-.ct-copy{ white-space:nowrap; }
+.ct-copy{ white-space:nowrap; flex-shrink:0; }
 .ct-copy a{ text-decoration:underline; text-decoration-color:rgba(244,244,243,0.3); text-underline-offset:3px; }
 @media (max-width:900px){
   #contacts{ padding:40px 20px 110px !important; }
