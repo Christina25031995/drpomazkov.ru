@@ -178,7 +178,10 @@ input,textarea{ font-family:inherit; }
 .meta-grid-label{ font-family:'IBM Plex Mono',monospace; font-size:10.5px; letter-spacing:0.2em; text-transform:uppercase; color:rgba(244,244,243,0.48); margin-bottom:9px; }
 .meta-grid-value{ font-size:14.5px; line-height:1.65; color:#d7d5d1; }
 .ba-expert{ margin:clamp(18px,2.4vh,26px) 0 0; padding-top:clamp(14px,2vh,20px); border-top:1px solid rgba(244,244,243,0.12); font-family:'Source Serif 4',Georgia,serif; font-style:italic; font-size:clamp(14px,1.15vw,17px); line-height:1.5; color:rgba(244,244,243,0.82); max-width:56ch; }
+.ba-expert:has(span){ font-size:clamp(11.5px,0.95vw,13.5px); }
 .ba-expert[hidden]{ display:none; }
+.ba-expert span{ display:block; white-space:nowrap; }
+@media (max-width:900px){ .ba-expert span{ display:inline; white-space:normal; } }
 @media (max-width:900px){
   .ba-grid{ grid-template-columns:1fr !important; }
   .ba-rail{ flex-direction:row !important; overflow-x:auto !important; gap:22px !important; }
@@ -222,6 +225,8 @@ input,textarea{ font-family:inherit; }
 .cs-col-b{ grid-column:7 / span 5; }
 .cs-quote{ margin:10px 0 0; font-weight:500; font-size:clamp(18px,1.95vw,29px); line-height:1.26; text-wrap:balance; }
 .cs-note{ margin:10px 0 0; font-weight:400; font-size:clamp(15px,1.25vw,18px); line-height:1.52; color:rgba(27,26,24,0.8); text-wrap:pretty; }
+.cs-note span{ display:block; white-space:nowrap; }
+@media (max-width:900px){ .cs-note span{ display:inline; white-space:normal; } }
 .cs-discuss{ margin-top:clamp(26px,4vh,54px); max-width:min(560px,52%); padding-top:14px; border-top:1px solid rgba(27,26,24,0.16); }
 .cs-options{ margin-top:14px; padding-left:16px; border-left:1px solid rgba(27,26,24,0.18); display:flex; flex-direction:column; gap:clamp(12px,1.6vh,18px); }
 .cs-option{ display:grid; grid-template-columns:26px minmax(0,1fr); gap:14px; align-items:baseline; }
@@ -237,6 +242,8 @@ input,textarea{ font-family:inherit; }
 .cs-dec-sub{ margin:clamp(10px,1.6vh,18px) 0 0; font-weight:400; font-size:clamp(14px,1.1vw,16px); line-height:1.54; color:rgba(27,26,24,0.74); white-space:nowrap; }
 .cs-dec-sub--note{ white-space:normal; max-width:48ch; text-wrap:pretty; }
 .cs-dec-pull{ margin:clamp(16px,2.2vh,26px) 0 0; font-style:italic; font-weight:400; font-size:clamp(16px,1.5vw,23px); line-height:1.36; color:rgba(27,26,24,0.84); max-width:40ch; }
+.cs-dec-pull span{ display:block; white-space:nowrap; }
+@media (max-width:900px){ .cs-dec-pull span{ display:inline; white-space:normal; } }
 .cs-did{ margin:9px 0 0; font-size:clamp(13px,1vw,15px); line-height:1.56; color:rgba(27,26,24,0.74); text-wrap:pretty; }
 .cs-hr{ height:1px; background:rgba(27,26,24,0.13); margin-top:clamp(12px,1.8vh,20px); }
 .cs-later-label{ font-family:'IBM Plex Mono',monospace; font-size:10.5px; letter-spacing:0.2em; text-transform:uppercase; color:rgba(27,26,24,0.58); margin-top:11px; }
@@ -291,6 +298,7 @@ input,textarea{ font-family:inherit; }
 .ap5-principles > div{ padding:clamp(12px,1.8vh,18px) 0; font-family:'Source Serif 4',Georgia,serif; font-weight:600; font-size:clamp(15px,1.35vw,20px); line-height:1.3; letter-spacing:0.005em; color:rgba(244,244,243,0.92); border-top:1px solid rgba(244,244,243,0.16); }
 .ap5-principle-sub{ display:block; margin:8px 0 0; font-family:'Source Serif 4',Georgia,serif; font-style:italic; font-weight:400; font-size:clamp(12.5px,1.02vw,14.5px); line-height:1.48; color:rgba(244,244,243,0.62); max-width:42ch; }
 .ap5-principle-note{ margin:14px 0 0; font-family:'Source Serif 4',Georgia,serif; font-style:italic; font-weight:400; font-size:clamp(13px,1.05vw,15px); line-height:1.5; color:rgba(244,244,243,0.68); max-width:44ch; }
+.ap5-principle-note span{ display:block; white-space:nowrap; }
 @media (max-width:900px){
   #approach{ padding:28px 20px 120px !important; min-height:100svh !important; display:block !important; }
   #approach h2 span{ font-size:31px !important; white-space:normal !important; }
@@ -342,6 +350,8 @@ input,textarea{ font-family:inherit; }
 .pj-num.accent{ color:#8a6a3c; }
 .pj-name{ font-family:'Source Serif 4',Georgia,serif; font-weight:600; text-transform:uppercase; font-size:clamp(19px,1.9vw,29px); line-height:1.15; }
 .pj-desc{ margin:0; font-size:clamp(15px,1.2vw,17.5px); line-height:1.68; color:rgba(27,26,24,0.78); text-wrap:pretty; }
+.pj-desc:has(span){ font-size:clamp(12.5px,1vw,14.5px); }
+.pj-desc span{ display:block; white-space:nowrap; }
 .pj-after{ margin-top:clamp(32px,5vh,66px); padding-left:clamp(0px,10vw,160px); max-width:1040px; }
 .pj-after-label{ font-family:'IBM Plex Mono',monospace; font-size:11px; letter-spacing:0.2em; text-transform:uppercase; color:rgba(27,26,24,0.62); }
 .pj-after-quote{ margin:clamp(12px,1.8vh,20px) 0 0; font-family:'Source Serif 4',Georgia,serif; font-weight:600; font-size:clamp(15px,1.7vw,28px); line-height:1.24; white-space:nowrap; }
@@ -419,6 +429,8 @@ input,textarea{ font-family:inherit; }
 .ex-preview-num{ position:absolute; left:16px; bottom:14px; font-family:'IBM Plex Mono',monospace; font-size:10.5px; letter-spacing:0.2em; text-transform:uppercase; color:rgba(244,244,243,0.62); }
 .ex-title{ margin:clamp(14px,2vh,22px) 0 0; font-family:'Source Serif 4',Georgia,serif; font-weight:600; font-size:clamp(15px,1.35vw,22px); line-height:1.25; }
 .ex-text{ margin:clamp(10px,1.5vh,16px) 0 0; font-size:clamp(13px,0.98vw,15px); line-height:1.62; color:rgba(244,244,243,0.72); max-width:42ch; text-wrap:pretty; }
+.ex-text span{ display:block; }
+.ex-text span + span{ margin-top:0.5em; }
 @media (max-width:900px){
   #explains{ padding:40px 20px 96px !important; min-height:auto !important; }
   #explains button span:last-child{ font-size:17px !important; }
@@ -497,7 +509,10 @@ input,textarea{ font-family:inherit; }
 .ct-docs button{ padding:0; background:none; border:0; text-align:left; cursor:pointer; font-family:inherit; font-size:14.5px; }
 .ct-legal{ margin-top:clamp(30px,4.6vh,58px); padding-top:16px; border-top:1px solid rgba(244,244,243,0.14); display:flex; justify-content:space-between; gap:24px; font-size:12.5px; line-height:1.6; color:rgba(244,244,243,0.62); }
 .ct-legal-text{ max-width:60ch; }
+.ct-legal-text p{ margin:0; }
+.ct-legal-text p + p{ margin-top:8px; }
 .ct-copy{ white-space:nowrap; }
+.ct-copy a{ text-decoration:underline; text-decoration-color:rgba(244,244,243,0.3); text-underline-offset:3px; }
 @media (max-width:900px){
   #contacts{ padding:40px 20px 110px !important; }
   .ct-grid{ grid-template-columns:minmax(0,1fr) !important; gap:28px !important; }
