@@ -279,6 +279,35 @@
     render();
   })();
 
+  /* ================= Независимые отзывы (external review links) ======= */
+  (function renderExternalReviews() {
+    var list = document.getElementById('xr-list');
+    if (!list) return;
+
+    // Single editable source of truth for platform name/rating/url.
+    // If Philipp later supplies an official embeddable widget for a
+    // platform, set that entry's `widgetHtml` and it renders instead
+    // of the static row below — no markup/CSS changes needed.
+    var externalReviews = {
+      prodoctorov: { name: 'Продокторов', rating: '4.0', url: 'https://prodoctorov.ru/spb/vrach/1097237-pomazkov/' },
+      napopravku: { name: 'Напоправку', rating: '5.0', url: 'https://napopravku.ru/spb/doctor-profile/pomazkov-filipp-olegovich/' }
+    };
+
+    Object.keys(externalReviews).forEach(function (key) {
+      var cfg = externalReviews[key];
+      var row = document.createElement('a');
+      row.className = 'xr-row';
+      row.href = cfg.url;
+      row.target = '_blank';
+      row.rel = 'noopener noreferrer';
+      row.innerHTML = cfg.widgetHtml || (
+        '<div class="xr-row-top"><span class="xr-name">' + cfg.name + '</span><span class="xr-rating">★&nbsp;' + cfg.rating + '</span></div>' +
+        '<div class="xr-row-bottom"><span class="xr-cta">Смотреть отзывы</span><span class="xr-arrow">↗</span></div>'
+      );
+      list.appendChild(row);
+    });
+  })();
+
   /* ================= Mobile Путь пациента pager ======================= */
   (function mobileJourney() {
     var barsWrap = document.getElementById('mj-bars');
