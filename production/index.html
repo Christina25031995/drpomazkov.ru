@@ -26,7 +26,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,500;0,8..60,600;0,8..60,700;1,8..60,400;1,8..60,500&family=IBM+Plex+Sans:wght@300;400;500;600&family=IBM+Plex+Mono:wght@400;500&family=Montserrat:wght@400;500;600&display=swap" rel="stylesheet">
 
-<link rel="stylesheet" href="styles.css?v=25">
+<link rel="stylesheet" href="styles.css?v=26">
 
 <script type="application/ld+json">
 {
@@ -198,9 +198,9 @@
     <div>
       <div class="ba-stage" id="ba-stage">
         <div class="ba-layer" id="ba-layer">
-          <div class="ba-before"><div class="ba-placeholder">Фото «до» появится после публикации кейса</div></div>
+          <div class="ba-before"><img id="ba-before-img" alt="" hidden><div class="ba-placeholder" id="ba-before-placeholder">Фото «до» появится после публикации кейса</div></div>
           <div class="ba-after-clip" id="ba-after-clip">
-            <div class="ba-after"><div class="ba-placeholder">Фото «после» появится после публикации кейса</div></div>
+            <div class="ba-after"><img id="ba-after-img" alt="" hidden><div class="ba-placeholder" id="ba-after-placeholder">Фото «после» появится после публикации кейса</div></div>
           </div>
         </div>
         <div class="ba-divider" id="ba-divider"><div class="ba-divider-grip"><i></i><i></i></div></div>
@@ -281,11 +281,11 @@
 
     <div class="cs-photos">
       <div>
-        <div class="cs-before-frame"><div class="ba-placeholder">До&nbsp;— публикуется отдельно</div></div>
+        <div class="cs-before-frame"><img src="assets/cases/mammoplasty-case-before.jpg" alt="До"></div>
         <div class="cs-photo-caption">до</div>
       </div>
       <div>
-        <div class="cs-result-frame"><div class="ba-placeholder">Результат&nbsp;— публикуется отдельно</div></div>
+        <div class="cs-result-frame"><img src="assets/cases/mammoplasty-case-after.jpg" alt="Результат"></div>
         <div class="cs-photo-caption-row"><div>результат</div><span>8 месяцев</span></div>
       </div>
     </div>
@@ -549,22 +549,22 @@
 <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/SplitText.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/DrawSVGPlugin.min.js"></script>
 
-<script src="ap5-figure.js?v=25"></script>
-<script src="availability.js?v=25"></script>
-<script src="booking.js?v=25"></script>
-<script src="app.js?v=25"></script>
+<script src="ap5-figure.js?v=26"></script>
+<script src="availability.js?v=26"></script>
+<script src="booking.js?v=26"></script>
+<script src="app.js?v=26"></script>
 
 <!-- Motion system — loads after app.js so dynamically-created elements
      (rail buttons, subnav, booking panels) already exist in the DOM. -->
-<script src="motion/global.js?v=25"></script>
-<script src="motion/hero.js?v=25"></script>
-<script src="motion/requests.js?v=25"></script>
-<script src="motion/results.js?v=25"></script>
-<script src="motion/works.js?v=25"></script>
-<script src="motion/approach.js?v=25"></script>
-<script src="motion/price.js?v=25"></script>
-<script src="motion/explains.js?v=25"></script>
-<script src="motion/booking.js?v=25"></script>
-<script src="motion/router.js?v=25"></script>
+<script src="motion/global.js?v=26"></script>
+<script src="motion/hero.js?v=26"></script>
+<script src="motion/requests.js?v=26"></script>
+<script src="motion/results.js?v=26"></script>
+<script src="motion/works.js?v=26"></script>
+<script src="motion/approach.js?v=26"></script>
+<script src="motion/price.js?v=26"></script>
+<script src="motion/explains.js?v=26"></script>
+<script src="motion/booking.js?v=26"></script>
+<script src="motion/router.js?v=26"></script>
 </body>
 </html>
