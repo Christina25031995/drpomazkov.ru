@@ -12,8 +12,8 @@ Thumbs.db
 .env.*
 *.pem
 *.key
-!production/assets/*.otf
-!production/assets/*.ttf
+!assets/*.otf
+!assets/*.ttf
 
 # Logs
 *.log
