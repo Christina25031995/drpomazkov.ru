@@ -181,7 +181,7 @@
     if (!rail || !stage) return;
 
     // Bump when case photos are replaced under the same file name, so browsers don't show cached old ones.
-    var PHOTO_V = '?v=36';
+    var PHOTO_V = '?v=37';
     var CASES = [
       { proc: 'Блефаропластика', title: 'Верхняя блефаропластика', task: 'Тяжёлое верхнее веко, взгляд читается уставшим.', did: 'Иссечение избытка кожи верхнего века, разрез в естественной складке.', result: 'Взгляд открытый, форма глаза сохранена.', term: '3 месяца', expert: '<span>«Развести избыток кожи, опущение брови и птоз — главная задача консультации.</span> <span>От этого зависит весь план.»</span>', photos: [
         { before: 'assets/cases/blepharoplasty-upper-6-before.jpg', after: 'assets/cases/blepharoplasty-upper-6-after.jpg' },
