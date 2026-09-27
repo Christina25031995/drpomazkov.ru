@@ -85,6 +85,13 @@
       return b;
     });
     var lastActiveStep = -1; // motion hook only — read by motion/requests.js
+    var CASE_FOR_STEP = ['Блефаропластика', 'Маммопластика', 'Абдоминопластика', 'Липосакция', 'Подтяжка лица'];
+    var cta = document.getElementById('b2-cta');
+    var shownStep = 0;
+    cta.addEventListener('click', function (e) { e.preventDefault(); openCase(CASE_FOR_STEP[shownStep]); });
+    types.forEach(function (el, i) {
+      if (el) el.addEventListener('click', function () { openCase(CASE_FOR_STEP[i]); });
+    });
 
     function goTo(i) {
       var range = section.offsetHeight - window.innerHeight;
@@ -142,6 +149,9 @@
       progressEl.style.width = (Math.min(100, Math.max(0, ((x + 0.6) / 5.6) * 100))).toFixed(1) + '%';
 
       var shown = w[active] >= 0.5 ? active : Math.min(4, active + 1);
+      shownStep = shown;
+      cta.style.color = ink;
+      types.forEach(function (el, i) { if (el) el.classList.toggle('b2-live', i === shown); });
       stepBtns.forEach(function (b, i) {
         b.style.color = i === shown ? ink : (warm > 0.5 ? 'rgba(33,31,27,0.5)' : 'rgba(244,244,243,0.4)');
       });
@@ -151,6 +161,16 @@
     window.addEventListener('resize', tick);
     tick();
   })();
+
+  /* ================= «Ваш запрос» → нужный кейс в «Можно добиться» ===== */
+  function openCase(proc) {
+    document.dispatchEvent(new CustomEvent('pmz:open-case', { detail: { proc: proc } }));
+    var target = document.getElementById('results');
+    if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+  document.querySelectorAll('.mq-cta').forEach(function (a) {
+    a.addEventListener('click', function (e) { e.preventDefault(); openCase(a.getAttribute('data-case')); });
+  });
 
   /* ================= Mobile Ваш запрос rail (active dot sync) ========= */
   (function mobileRequestRail() {
@@ -181,7 +201,7 @@
     if (!rail || !stage) return;
 
     // Bump when case photos are replaced under the same file name, so browsers don't show cached old ones.
-    var PHOTO_V = '?v=38';
+    var PHOTO_V = '?v=39';
     var CASES = [
       { proc: 'Блефаропластика', title: 'Верхняя блефаропластика', task: 'Тяжёлое верхнее веко, взгляд читается уставшим.', did: 'Иссечение избытка кожи верхнего века, разрез в естественной складке.', result: 'Взгляд открытый, форма глаза сохранена.', term: '3 месяца', expert: '<span>«Развести избыток кожи, опущение брови и птоз — главная задача консультации.</span> <span>От этого зависит весь план.»</span>', photos: [
         { before: 'assets/cases/blepharoplasty-upper-6-before.jpg', after: 'assets/cases/blepharoplasty-upper-6-after.jpg' },
@@ -189,13 +209,13 @@
         { before: 'assets/cases/blepharoplasty-upper-3-before.jpg', after: 'assets/cases/blepharoplasty-upper-3-after.jpg' },
         { before: 'assets/cases/blepharoplasty-upper-4-before.jpg', after: 'assets/cases/blepharoplasty-upper-4-after.jpg' },
         { before: 'assets/cases/blepharoplasty-upper-5-before.jpg', after: 'assets/cases/blepharoplasty-upper-5-after.jpg' },
-        { before: 'assets/cases/blepharoplasty-upper-7-before.jpg', after: 'assets/cases/blepharoplasty-upper-7-after.jpg' },
+        { before: 'assets/cases/blepharoplasty-upper-7-before.jpg', after: 'assets/cases/blepharoplasty-upper-7-after.jpg', text: { term: '6 месяцев' } },
         { before: 'assets/cases/blepharoplasty-upper-8-before.jpg', after: 'assets/cases/blepharoplasty-upper-8-after.jpg' }
       ] },
       { proc: 'Нижняя блефаропластика', title: 'Нижняя блефаропластика', task: 'Тёмные круги и мешки под глазами, уставший взгляд.', did: 'Коррекция нижнего века трансконъюнктивальным доступом.', result: 'Ровный контур нижнего века, свежий взгляд.', term: '5 недель', photos: [{ before: 'assets/cases/blepharoplasty-lower-before.jpg', after: 'assets/cases/blepharoplasty-lower-after.jpg' }] },
       { proc: 'Маммопластика', title: 'Подтяжка груди с имплантами', task: 'Опущение груди и потеря объёма.', did: 'Подтяжка груди с установкой имплантов.', result: 'Грудь поднята, форма и объём восстановлены.', term: '2 месяца', expert: '<span>«Если анатомия и объём собственных тканей позволяют,</span> <span>форму груди можно скорректировать без импланта.»</span>', photos: [
         { before: 'assets/cases/mammoplasty-before.jpg', after: 'assets/cases/mammoplasty-after.jpg' },
-        { before: 'assets/cases/mammoplasty-2-before.jpg', after: 'assets/cases/mammoplasty-2-after.jpg', text: { title: 'Коррекция тубулярной формы груди', task: 'Асимметрия объёма и тубулярная форма.', did: 'Импланты разного объёма + симметризация ареол.', result: 'Симметрия и естественная форма.', term: '6 месяцев' } }
+        { before: 'assets/cases/mammoplasty-2-before.jpg', after: 'assets/cases/mammoplasty-2-after.jpg', text: { title: 'Увеличение груди', task: 'Недостаточный объём груди.', did: 'Увеличение груди имплантами одинакового объёма.', result: 'Больший объём при естественной форме.', term: '6 месяцев' } }
       ] },
       { proc: 'Абдоминопластика', title: 'Абдоминопластика после родов', task: 'Диастаз и избыток кожи после беременности.', did: 'Абдоминопластика с ушиванием диастаза.', result: 'Восстановленный контур живота.', term: '4 месяца', expert: '«Липосакция не заменяет абдоминопластику, если проблема связана с избытком кожи или диастазом.»', photos: [{ before: 'assets/cases/abdominoplasty-before.jpg', after: 'assets/cases/abdominoplasty-after.jpg' }] },
       { proc: 'Липосакция', title: 'Коррекция контуров тела', task: 'Локальные отложения, не уходящие при весе в норме.', did: 'Липосакция фланков и нижней зоны живота.', result: 'Ровный контур без потери объёма.', term: '3 месяца', expert: '<span>«Липосакция корректирует локальные объёмы,</span> <span>но не является способом похудения и не подтягивает дряблую кожу.»</span>' },
@@ -221,6 +241,11 @@
       b.addEventListener('click', function () { pick = i; photoIdx = 0; render(); });
       rail.appendChild(b);
       return b;
+    });
+
+    document.addEventListener('pmz:open-case', function (e) {
+      var i = CASES.findIndex(function (c) { return c.proc === e.detail.proc; });
+      if (i >= 0) { pick = i; photoIdx = 0; render(); }
     });
 
     photoPrev.addEventListener('click', function (e) {
