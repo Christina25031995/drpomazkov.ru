@@ -26,7 +26,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,500;0,8..60,600;0,8..60,700;1,8..60,400;1,8..60,500&family=IBM+Plex+Sans:wght@300;400;500;600&family=IBM+Plex+Mono:wght@400;500&family=Montserrat:wght@400;500;600&display=swap" rel="stylesheet">
 
-<link rel="stylesheet" href="styles.css?v=29">
+<link rel="stylesheet" href="styles.css?v=30">
 
 <script type="application/ld+json">
 {
@@ -206,6 +206,11 @@
         <div class="ba-divider" id="ba-divider"><div class="ba-divider-grip"><i></i><i></i></div></div>
         <div class="ba-label ba-label-before">до</div>
         <div class="ba-label ba-label-after">после</div>
+        <div class="ba-photo-nav" id="ba-photo-nav" hidden>
+          <button type="button" class="ba-photo-arrow" id="ba-photo-prev" aria-label="Предыдущий пример">‹</button>
+          <span class="ba-photo-count" id="ba-photo-count"></span>
+          <button type="button" class="ba-photo-arrow" id="ba-photo-next" aria-label="Следующий пример">›</button>
+        </div>
       </div>
       <div class="ba-meta-row"><div class="ba-case-title" id="ba-title"></div><div class="ba-case-term" id="ba-term"></div></div>
       <div class="sec-rule" style="background:rgba(244,244,243,0.16);"></div>
@@ -552,7 +557,7 @@
 <script src="ap5-figure.js?v=29"></script>
 <script src="availability.js?v=29"></script>
 <script src="booking.js?v=29"></script>
-<script src="app.js?v=29"></script>
+<script src="app.js?v=30"></script>
 
 <!-- Motion system — loads after app.js so dynamically-created elements
      (rail buttons, subnav, booking panels) already exist in the DOM. -->

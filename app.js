@@ -181,10 +181,14 @@
     if (!rail || !stage) return;
 
     var CASES = [
-      { proc: 'Блефаропластика', title: 'Верхняя блефаропластика', task: 'Тяжёлое верхнее веко, взгляд читается уставшим.', did: 'Иссечение избытка кожи верхнего века, разрез в естественной складке.', result: 'Взгляд открытый, форма глаза сохранена.', term: '3 месяца', expert: '<span>«Развести избыток кожи, опущение брови и птоз — главная задача консультации.</span> <span>От этого зависит весь план.»</span>', photos: { before: 'assets/cases/blepharoplasty-upper-before.jpg', after: 'assets/cases/blepharoplasty-upper-after.jpg' } },
-      { proc: 'Нижняя блефаропластика', title: 'Нижняя блефаропластика', task: 'Тёмные круги и мешки под глазами, уставший взгляд.', did: 'Коррекция нижнего века трансконъюнктивальным доступом.', result: 'Ровный контур нижнего века, свежий взгляд.', term: '5 недель', photos: { before: 'assets/cases/blepharoplasty-lower-before.jpg', after: 'assets/cases/blepharoplasty-lower-after.jpg' } },
-      { proc: 'Маммопластика', title: 'Коррекция тубулярной формы груди', task: 'Асимметрия объёма и тубулярная форма.', did: 'Импланты разного объёма + симметризация ареол.', result: 'Симметрия и естественная форма.', term: '6 месяцев', expert: '<span>«Если анатомия и объём собственных тканей позволяют,</span> <span>форму груди можно скорректировать без импланта.»</span>', photos: { before: 'assets/cases/mammoplasty-before.jpg', after: 'assets/cases/mammoplasty-after.jpg' } },
-      { proc: 'Абдоминопластика', title: 'Абдоминопластика после родов', task: 'Диастаз и избыток кожи после беременности.', did: 'Абдоминопластика с ушиванием диастаза.', result: 'Восстановленный контур живота.', term: '4 месяца', expert: '«Липосакция не заменяет абдоминопластику, если проблема связана с избытком кожи или диастазом.»', photos: { before: 'assets/cases/abdominoplasty-before.jpg', after: 'assets/cases/abdominoplasty-after.jpg' } },
+      { proc: 'Блефаропластика', title: 'Верхняя блефаропластика', task: 'Тяжёлое верхнее веко, взгляд читается уставшим.', did: 'Иссечение избытка кожи верхнего века, разрез в естественной складке.', result: 'Взгляд открытый, форма глаза сохранена.', term: '3 месяца', expert: '<span>«Развести избыток кожи, опущение брови и птоз — главная задача консультации.</span> <span>От этого зависит весь план.»</span>', photos: [
+        { before: 'assets/cases/blepharoplasty-upper-before.jpg', after: 'assets/cases/blepharoplasty-upper-after.jpg' },
+        { before: 'assets/cases/blepharoplasty-upper-2-before.jpg', after: 'assets/cases/blepharoplasty-upper-2-after.jpg' },
+        { before: 'assets/cases/blepharoplasty-upper-4-before.jpg', after: 'assets/cases/blepharoplasty-upper-4-after.jpg' }
+      ] },
+      { proc: 'Нижняя блефаропластика', title: 'Нижняя блефаропластика', task: 'Тёмные круги и мешки под глазами, уставший взгляд.', did: 'Коррекция нижнего века трансконъюнктивальным доступом.', result: 'Ровный контур нижнего века, свежий взгляд.', term: '5 недель', photos: [{ before: 'assets/cases/blepharoplasty-lower-before.jpg', after: 'assets/cases/blepharoplasty-lower-after.jpg' }] },
+      { proc: 'Маммопластика', title: 'Коррекция тубулярной формы груди', task: 'Асимметрия объёма и тубулярная форма.', did: 'Импланты разного объёма + симметризация ареол.', result: 'Симметрия и естественная форма.', term: '6 месяцев', expert: '<span>«Если анатомия и объём собственных тканей позволяют,</span> <span>форму груди можно скорректировать без импланта.»</span>', photos: [{ before: 'assets/cases/mammoplasty-before.jpg', after: 'assets/cases/mammoplasty-after.jpg' }] },
+      { proc: 'Абдоминопластика', title: 'Абдоминопластика после родов', task: 'Диастаз и избыток кожи после беременности.', did: 'Абдоминопластика с ушиванием диастаза.', result: 'Восстановленный контур живота.', term: '4 месяца', expert: '«Липосакция не заменяет абдоминопластику, если проблема связана с избытком кожи или диастазом.»', photos: [{ before: 'assets/cases/abdominoplasty-before.jpg', after: 'assets/cases/abdominoplasty-after.jpg' }] },
       { proc: 'Липосакция', title: 'Коррекция контуров тела', task: 'Локальные отложения, не уходящие при весе в норме.', did: 'Липосакция фланков и нижней зоны живота.', result: 'Ровный контур без потери объёма.', term: '3 месяца', expert: '<span>«Липосакция корректирует локальные объёмы,</span> <span>но не является способом похудения и не подтягивает дряблую кожу.»</span>' },
       { proc: 'Подтяжка лица', title: 'Подтяжка лица', task: 'Опущение тканей средней зоны лица.', did: 'Подтяжка с сохранением индивидуальных черт.', result: 'Свежесть без эффекта «нового лица».', term: '6 месяцев', expert: '<span>«Лицо стареет неравномерно:</span> <span>верхняя, средняя и нижняя треть требуют разных хирургических решений.»</span>' }
     ];
@@ -193,7 +197,11 @@
     var afterImg = document.getElementById('ba-after-img');
     var beforePlaceholder = document.getElementById('ba-before-placeholder');
     var afterPlaceholder = document.getElementById('ba-after-placeholder');
-    var pick = 0, div = 50;
+    var photoNav = document.getElementById('ba-photo-nav');
+    var photoPrev = document.getElementById('ba-photo-prev');
+    var photoNext = document.getElementById('ba-photo-next');
+    var photoCount = document.getElementById('ba-photo-count');
+    var pick = 0, div = 50, photoIdx = 0;
 
     rail.setAttribute('role', 'tablist');
     var railBtns = CASES.map(function (c, i) {
@@ -201,9 +209,22 @@
       b.type = 'button';
       b.textContent = c.proc;
       b.setAttribute('role', 'tab');
-      b.addEventListener('click', function () { pick = i; render(); });
+      b.addEventListener('click', function () { pick = i; photoIdx = 0; render(); });
       rail.appendChild(b);
       return b;
+    });
+
+    photoPrev.addEventListener('click', function (e) {
+      e.stopPropagation();
+      var n = CASES[pick].photos.length;
+      photoIdx = (photoIdx - 1 + n) % n;
+      render();
+    });
+    photoNext.addEventListener('click', function (e) {
+      e.stopPropagation();
+      var n = CASES[pick].photos.length;
+      photoIdx = (photoIdx + 1) % n;
+      render();
     });
 
     function setDivider(clientX) {
@@ -214,6 +235,7 @@
       divider.style.left = div + '%';
     }
     stage.addEventListener('pointerdown', function (e) {
+      if (e.target.closest('.ba-photo-nav')) return;
       setDivider(e.clientX);
       var move = function (ev) { setDivider(ev.clientX); };
       var up = function () {
@@ -235,12 +257,20 @@
       var expertEl = document.getElementById('ba-expert');
       if (c.expert) { expertEl.innerHTML = c.expert; expertEl.hidden = false; }
       else { expertEl.hidden = true; }
-      if (c.photos) {
-        beforeImg.src = c.photos.before; beforeImg.hidden = false; beforePlaceholder.hidden = true;
-        afterImg.src = c.photos.after; afterImg.hidden = false; afterPlaceholder.hidden = true;
+      if (c.photos && c.photos.length) {
+        var shot = c.photos[photoIdx];
+        beforeImg.src = shot.before; beforeImg.hidden = false; beforePlaceholder.hidden = true;
+        afterImg.src = shot.after; afterImg.hidden = false; afterPlaceholder.hidden = true;
+        if (c.photos.length > 1) {
+          photoNav.hidden = false;
+          photoCount.textContent = (photoIdx + 1) + ' / ' + c.photos.length;
+        } else {
+          photoNav.hidden = true;
+        }
       } else {
         beforeImg.hidden = true; beforePlaceholder.hidden = false;
         afterImg.hidden = true; afterPlaceholder.hidden = false;
+        photoNav.hidden = true;
       }
       afterClip.style.clipPath = 'inset(0 0 0 ' + div + '%)';
       divider.style.left = div + '%';
