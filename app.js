@@ -180,6 +180,8 @@
     var divider = document.getElementById('ba-divider');
     if (!rail || !stage) return;
 
+    // Bump when case photos are replaced under the same file name, so browsers don't show cached old ones.
+    var PHOTO_V = '?v=31';
     var CASES = [
       { proc: 'Блефаропластика', title: 'Верхняя блефаропластика', task: 'Тяжёлое верхнее веко, взгляд читается уставшим.', did: 'Иссечение избытка кожи верхнего века, разрез в естественной складке.', result: 'Взгляд открытый, форма глаза сохранена.', term: '3 месяца', expert: '<span>«Развести избыток кожи, опущение брови и птоз — главная задача консультации.</span> <span>От этого зависит весь план.»</span>', photos: [
         { before: 'assets/cases/blepharoplasty-upper-before.jpg', after: 'assets/cases/blepharoplasty-upper-after.jpg' },
@@ -259,8 +261,8 @@
       else { expertEl.hidden = true; }
       if (c.photos && c.photos.length) {
         var shot = c.photos[photoIdx];
-        beforeImg.src = shot.before; beforeImg.hidden = false; beforePlaceholder.hidden = true;
-        afterImg.src = shot.after; afterImg.hidden = false; afterPlaceholder.hidden = true;
+        beforeImg.src = shot.before + PHOTO_V; beforeImg.hidden = false; beforePlaceholder.hidden = true;
+        afterImg.src = shot.after + PHOTO_V; afterImg.hidden = false; afterPlaceholder.hidden = true;
         if (c.photos.length > 1) {
           photoNav.hidden = false;
           photoCount.textContent = (photoIdx + 1) + ' / ' + c.photos.length;
