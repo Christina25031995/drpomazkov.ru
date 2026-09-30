@@ -201,7 +201,7 @@
     if (!rail || !stage) return;
 
     // Bump when case photos are replaced under the same file name, so browsers don't show cached old ones.
-    var PHOTO_V = '?v=41';
+    var PHOTO_V = '?v=42';
     var CASES = [
       { proc: 'Блефаропластика', title: 'Верхняя блефаропластика', task: 'Тяжёлое верхнее веко, взгляд читается уставшим.', did: 'Иссечение избытка кожи, мышцы, жировых пакетов верхних век, разрез в естественной складке.', result: 'Взгляд открытый, форма глаза сохранена.', term: '3 месяца', expert: '<span>«Развести избыток кожи, опущение брови и птоз — главная задача консультации.</span> <span>От этого зависит весь план.»</span>', photos: [
         { before: 'assets/cases/blepharoplasty-upper-6-before.jpg', after: 'assets/cases/blepharoplasty-upper-6-after.jpg' },
@@ -421,6 +421,63 @@
     render();
   })();
 
+  /* ================= Яндекс Метрика (только после согласия) ============ */
+  var METRIKA_ID = 113200258; // счётчик drpomazkov.ru (аккаунт philipppomazkov)
+  var metrikaLoaded = false;
+  window.pomazkovLoadAnalytics = function () {
+    if (metrikaLoaded || !METRIKA_ID) return;
+    metrikaLoaded = true;
+    (function (m, e, t, r, i, k, a) {
+      m[i] = m[i] || function () { (m[i].a = m[i].a || []).push(arguments); };
+      m[i].l = 1 * new Date();
+      k = e.createElement(t); a = e.getElementsByTagName(t)[0];
+      k.async = 1; k.src = r; a.parentNode.insertBefore(k, a);
+    })(window, document, 'script', 'https://mc.yandex.ru/metrika/tag.js', 'ym');
+    window.ym(METRIKA_ID, 'init', { clickmap: true, trackLinks: true, accurateTrackBounce: true, webvisor: true });
+  };
+  // Цели для Метрики и рекламы. Срабатывают, только если посетитель дал согласие.
+  // Каждая цель засчитывается один раз за визит, чтобы не раздувать статистику.
+  var goalsSent = {};
+  function goal(name) {
+    if (!metrikaLoaded || !window.ym || goalsSent[name]) return;
+    goalsSent[name] = true;
+    window.ym(METRIKA_ID, 'reachGoal', name);
+  }
+  window.pmzGoal = goal;
+  document.addEventListener('click', function (e) {
+    var el = e.target.closest('a, button');
+    if (!el) return;
+    var href = el.getAttribute('href') || '';
+    if (el.id === 'bk-tg-btn' || el.id === 'mb-tg-btn') goal('booking_telegram');
+    else if (/t\.me\//.test(href)) goal('telegram');
+    if (el.id === 'b2-cta' || el.classList.contains('mq-cta')) goal('request_results');
+    if (el.classList.contains('xr-row')) goal('reviews_click');
+    if (el.closest('#ba-rail')) goal('case_tab');
+    if (el.id === 'ba-photo-prev' || el.id === 'ba-photo-next') goal('case_photo');
+  }, true);
+  document.addEventListener('pointerup', function (e) {
+    if (e.target.closest && e.target.closest('#ba-stage') && !e.target.closest('.ba-photo-nav')) goal('ba_slider');
+  }, true);
+  // Досмотрел до ключевых блоков (на телефоне эти же цели шлёт мобильная шторка).
+  if ('IntersectionObserver' in window) {
+    [['price', 'price_view'], ['booking', 'booking_view']].forEach(function (pair) {
+      var node = document.getElementById(pair[0]);
+      if (!node) return;
+      new IntersectionObserver(function (entries, obs) {
+        entries.forEach(function (en) { if (en.isIntersecting) { goal(pair[1]); if (goalsSent[pair[1]]) obs.disconnect(); } });
+      }, { threshold: 0.4 }).observe(node);
+    });
+  }
+  function dropMetrikaCookies() {
+    document.cookie.split(';').forEach(function (c) {
+      var n = c.split('=')[0].trim();
+      if (/^_ym/.test(n)) {
+        document.cookie = n + '=; Max-Age=0; path=/';
+        document.cookie = n + '=; Max-Age=0; path=/; domain=.' + location.hostname.replace(/^www\./, '');
+      }
+    });
+  }
+
   /* ================= Cookie consent + gated analytics ================= */
   var Cookie = (function () {
     var KEY = 'pmz-cookie';
@@ -431,9 +488,6 @@
 
     function loadAnalyticsIfConsented() {
       if (get() !== 'analytics') return;
-      // Real analytics snippet goes here (e.g. Yandex Metrica), gated
-      // behind explicit consent. No tracker is installed by default —
-      // see README-DEPLOY.md for how to add one.
       if (typeof window.pomazkovLoadAnalytics === 'function') window.pomazkovLoadAnalytics();
     }
 
@@ -443,7 +497,12 @@
       if (v === 'analytics') loadAnalyticsIfConsented();
     }
 
-    document.getElementById('cookie-necessary').addEventListener('click', function () { set('necessary'); refresh(); });
+    document.getElementById('cookie-necessary').addEventListener('click', function () {
+      set('necessary');
+      // Отзыв согласия: убираем cookie Метрики и перезагружаем, чтобы счётчик выгрузился.
+      if (metrikaLoaded) { dropMetrikaCookies(); location.reload(); return; }
+      refresh();
+    });
     document.getElementById('cookie-all').addEventListener('click', function () { set('analytics'); refresh(); });
     var openSettings = function () { set(''); try { localStorage.removeItem(KEY); } catch (e) {} refresh(); };
     document.getElementById('ct-cookie-settings').addEventListener('click', openSettings);
@@ -601,11 +660,15 @@
       var b = document.createElement('button');
       b.type = 'button';
       b.textContent = t.name;
-      b.addEventListener('click', function () { state.tab = t.key; render(); });
+      b.addEventListener('click', function () { state.tab = t.key; sheetGoal(t.key); render(); });
       tabsEl.appendChild(b);
       return b;
     });
 
+    function sheetGoal(tab) {
+      if (tab === 'price') goal('price_view');
+      if (tab === 'booking') goal('booking_view');
+    }
     function syncBody() {
       if (isMobile()) {
         document.body.dataset.mview = state.view;
@@ -647,6 +710,7 @@
     var openSheet = withNavLock(function (tab) {
       state.sheetOpen = true;
       state.tab = tab || 'booking';
+      sheetGoal(state.tab);
       pushHash('#/booking');
       render();
     });

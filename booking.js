@@ -63,16 +63,19 @@
     this.state.date = key;
     this.state.time = null;
     this.state.step = 'time';
+    if (window.pmzGoal) window.pmzGoal('booking_date');
     this.emit();
   };
   BookingFlow.prototype.pickTime = function (time) {
     this.state.time = time;
     this.state.step = 'topic';
+    if (window.pmzGoal) window.pmzGoal('booking_time');
     this.emit();
   };
   BookingFlow.prototype.pickTopic = function (topic) {
     this.state.topic = topic;
     this.state.step = 'done';
+    if (window.pmzGoal) window.pmzGoal('booking_topic');
     this.emit();
   };
   BookingFlow.prototype.back = function () {
