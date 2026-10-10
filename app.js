@@ -201,7 +201,7 @@
     if (!rail || !stage) return;
 
     // Bump when case photos are replaced under the same file name, so browsers don't show cached old ones.
-    var PHOTO_V = '?v=43';
+    var PHOTO_V = '?v=44';
     var CASES = [
       { proc: 'Блефаропластика', title: 'Верхняя блефаропластика', task: 'Тяжёлое верхнее веко, взгляд читается уставшим.', did: 'Иссечение избытка кожи, мышцы, жировых пакетов верхних век, разрез в естественной складке.', result: 'Взгляд открытый, форма глаза сохранена.', term: '3 месяца', expert: '<span>«Развести избыток кожи, опущение брови и птоз — главная задача консультации.</span> <span>От этого зависит весь план.»</span>', photos: [
         { before: 'assets/cases/blepharoplasty-upper-6-before.jpg', after: 'assets/cases/blepharoplasty-upper-6-after.jpg' },
@@ -321,7 +321,7 @@
     if (!list) return;
     var ITEMS = [
       { num: '01', title: 'Тяжёлое верхнее веко — не всегда блефаропластика', text: '<span>Одинаковая картина может быть следствием избытка кожи, опущения брови или птоза.</span> <span class="nowrap-line">Развести эти три состояния — главная задача консультации.</span>' },
-      { num: '02', title: 'Когда грудь можно поднять без импланта', text: 'Если анатомия и объём собственных тканей позволяют, верхний полюс удаётся наполнить без импланта.' },
+      { num: '02', title: 'Когда грудь можно поднять без импланта', text: 'Если анатомия и объём собственных тканей позволяют, верхний полюс удаётся наполнить без импланта.', video: { src: 'assets/video/explain-02-breast-lift.mp4', poster: 'assets/video/explain-02-breast-lift.jpg' } },
       { num: '03', title: 'Почему мини-абдоминопластика подходит не всем', text: 'Если избыток кожи есть выше пупка, мини-вариант оставит его на месте. Объём операции выбирается по расположению тканей, а не по желанию сделать меньший разрез.' },
       { num: '04', title: 'Почему я не делаю липосакцию множества зон за один раз', text: 'С каждой дополнительной зоной растёт нагрузка на организм. Если объём вмешательства становится избыточным, работу безопаснее разделить на этапы.' },
       { num: '05', title: 'Почему deep plane не должен давать эффект натянутого лица', text: 'При deep plane кожа и SMAS перемещаются единым блоком, а основное натяжение приходится на глубокие структуры, а не на кожу.' }
@@ -352,6 +352,20 @@
       document.getElementById('ex-num').textContent = ITEMS[i].num;
       document.getElementById('ex-title').textContent = ITEMS[i].title;
       document.getElementById('ex-text').innerHTML = ITEMS[i].text;
+      // Видео темы (если есть): показываем в окне превью, при смене темы убираем.
+      var preview = document.querySelector('.ex-preview');
+      var old = preview.querySelector('video');
+      if (old) { old.pause(); old.remove(); }
+      preview.classList.toggle('has-video', !!ITEMS[i].video);
+      if (ITEMS[i].video) {
+        var v = document.createElement('video');
+        v.className = 'ex-video';
+        v.src = ITEMS[i].video.src;
+        v.poster = ITEMS[i].video.poster;
+        v.controls = true; v.playsInline = true; v.preload = 'none';
+        v.setAttribute('playsinline', '');
+        preview.insertBefore(v, preview.firstChild);
+      }
       document.dispatchEvent(new CustomEvent('pmz:explains-step', { detail: { index: i } }));
     }
     render();

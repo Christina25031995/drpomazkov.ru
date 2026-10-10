@@ -437,6 +437,9 @@ input,textarea{ font-family:inherit; }
 .ex-item-title.active{ color:var(--ink-light); }
 .ex-preview{ position:relative; width:100%; height:min(52vh,460px); background:#17171a; overflow:hidden; }
 .ex-preview-label{ position:absolute; inset:0; display:flex; align-items:center; justify-content:center; font-family:'IBM Plex Mono',monospace; font-size:10.5px; letter-spacing:0.2em; text-transform:uppercase; color:rgba(244,244,243,0.55); text-align:center; padding:0 16px; }
+.ex-video{ position:absolute; inset:0; width:100%; height:100%; object-fit:contain; background:#0c0c0d; display:block; }
+.ex-preview.has-video{ height:min(72vh,640px); }
+.ex-preview.has-video .ex-preview-num{ display:none; }
 .ex-preview-num{ position:absolute; left:16px; bottom:14px; font-family:'IBM Plex Mono',monospace; font-size:10.5px; letter-spacing:0.2em; text-transform:uppercase; color:rgba(244,244,243,0.62); }
 .ex-title{ margin:clamp(14px,2vh,22px) 0 0; font-family:'Source Serif 4',Georgia,serif; font-weight:600; font-size:clamp(15px,1.35vw,22px); line-height:1.25; }
 .ex-text{ margin:clamp(10px,1.5vh,16px) 0 0; font-size:clamp(13px,0.98vw,15px); line-height:1.62; color:rgba(244,244,243,0.72); max-width:42ch; text-wrap:pretty; }
